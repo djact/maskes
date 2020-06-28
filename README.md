@@ -5,6 +5,7 @@
     ```
 2. Install packages:
     ```python
+        source env/bin/activate
         pip install -r requirements.txt
     ```
 3. Runserver
