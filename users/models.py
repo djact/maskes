@@ -1,6 +1,7 @@
 from django.db import models
 from PIL import Image
 from django.utils import timezone
+from requests.request_form_choices import CITY_CHOICES
 from django.contrib.auth.models import (AbstractBaseUser, 
                                         PermissionsMixin, 
                                         BaseUserManager)
@@ -41,10 +42,25 @@ class UserAccount(AbstractBaseUser,PermissionsMixin):
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
+class UserAddress(models.Model):
+    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE )
+    address1 = models.CharField("Address 1",max_length=1024)
+    address2 = models.CharField("Address 2",max_length=1024)
+    city = models.CharField("City",max_length=1024)
+    zip_code = models.CharField("ZIP / Postal code",max_length=12)
+
+    class Meta:
+        verbose_name = 'Address'
+        verbose_name_plural = 'Addresses'
+    
+    def __str__(self):
+        return "{} - {} {}, {}, WA{}".format(self.user, self.address1, self.address2, self.city, self.zip_code)
+
 class UserProfile(models.Model):
     user = models.OneToOneField(UserAccount, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    bio = models.TextField()
+    bio = models.TextField(blank=True)
+    phone = models.CharField(max_length=25, blank=True)
 
     class Meta:
         verbose_name = 'Profile'

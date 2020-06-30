@@ -1,7 +1,8 @@
 from django.db.models.signals import post_save
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
-from .models import UserProfile
+from .models import UserProfile, UserAddress
+from requests.models import Request
 
 User = get_user_model()
 
@@ -14,3 +15,15 @@ def create_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
     instance.userprofile.save()
+
+
+@receiver(post_save, sender=Request)
+def create_address(sender, instance, created, **kwargs):
+    if created:
+        UserAddress.objects.update_or_create(
+            user = instance.requester,
+            address1 = instance.address1,
+            address2 = instance.address2,
+            city =  instance.city,
+            zip_code = instance.zip_code
+        )

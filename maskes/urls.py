@@ -22,9 +22,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('djoser.urls')),
+    path('', include('users.urls', namespace='user')),
     path('auth/', include('djoser.urls.jwt')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('users/', include('users.urls', namespace='users')),
+    path('requests/', include('requests.urls', namespace='request')),
 ]
 
 if settings.DEBUG:
