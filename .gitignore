@@ -3,3 +3,5 @@ build/logo/
 .env
 generate_faker.py
 fake_list.py
+maskes-ui/
+backup/

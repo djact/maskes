@@ -8,10 +8,14 @@ class RequestSerializer(serializers.ModelSerializer):
         view_name='users:useraccount-detail',
         read_only=True,
     )
+    name = serializers.SerializerMethodField()
     status = serializers.ReadOnlyField()
     created_date = serializers.ReadOnlyField()
     
     class Meta:
         model = Request
         exclude = ['last_edit']
+
+    def get_name (self, obj):
+        return obj.requester.first_name
     
