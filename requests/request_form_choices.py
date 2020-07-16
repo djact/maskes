@@ -4,9 +4,9 @@ URGENCY_CHOICES = (
     ("Useful if available", "Useful if avaiable")
 )
 CONTACT_CHOICES = (
-    ("CALL","Phone Number - Call"),
-    ("TEXT", "Phone Number - Text"),
-    ("EMAIL", "Email")
+    ("Phone Number - Call","Phone Number - Call"),
+    ("Phone Number - Text", "Phone Number - Text"),
+    ("Email", "Email")
 )
 CITY_CHOICES = (
     ("Algona Pacific","Algona Pacific"),
@@ -48,9 +48,9 @@ FOOD_CHOICES = (
 )
 
 FINANCIAL_SUPPORT_CHOICES = (
-    ("Pay and Donate", "Pay with your own money and donate to support your community members"),
-    ("Pay", "Pay with your own money (coordinate with delivery person)"),
-    ("Need Support", "Request support with your delivery items"),
+    ("Pay with your own money and donate to support your community members", "Pay with your own money and donate to support your community members"),
+    ("Pay with your own money (coordinate with delivery person)", "Pay with your own money (coordinate with delivery person)"),
+    ("Request support with your delivery items", "Request support with your delivery items"),
 )
 SHARE_INFO_CHOICES = (
     (True,"Yes"),
@@ -62,12 +62,18 @@ NEED_CHECKIN_CHOICES = (
     ("Yes, by phone","Yes, by phone"),
     ("No, thank you","No, thank you"),
 )
-MAPOD_SETUP_CHOICES =(
+MAPOD_SETUP_CHOICES = (
+    (True,"Yes"),
+    (False,"No")
+)
+
+AGREE_TRANSFER_CHOICES = (
     (True,"Yes"),
     (False,"No")
 )
 
 REQUEST_STATUS_CHOICES = (
+    ("New", "New"),
     ("Pending","Pending"),
     ("In Process","In Process"),
     ("Completed","Completed"),

@@ -10,11 +10,13 @@ class Request(models.Model):
     phone = models.CharField(max_length=25)
     address1 = models.CharField("Address line 1",max_length=1024)
     address2 = models.CharField("Address line 2",max_length=1024)
-    city = models.CharField(choices=CITY_CHOICES,max_length=1024)
+    city = models.CharField("City", max_length=255)
     zip_code = models.CharField("ZIP / Postal code",max_length=12)
+    locations = models.CharField(choices=CITY_CHOICES,max_length=1024)
     contact_preference = models.CharField(choices=CONTACT_CHOICES, max_length=150)
-    agree_transfer = models.BooleanField(),
-    prefered_food = models.CharField(choices=FOOD_CHOICES,max_length=150)
+    agree_transfer = models.BooleanField(choices=AGREE_TRANSFER_CHOICES),
+    #accept a list of items
+    prefered_food = models.TextField(max_length=1024)
     items_list = models.TextField()
     food_restrictions = models.TextField(default=None, blank=True)
     household_number = models.SmallIntegerField(default=1)
@@ -24,10 +26,10 @@ class Request(models.Model):
     share_info = models.BooleanField(choices=SHARE_INFO_CHOICES)
     need_checkin = models.CharField(choices=NEED_CHECKIN_CHOICES,max_length=150)
     extra_info = models.TextField(blank=True, max_length=1024)
-    ma_pod_setup = models.BooleanField(choices=MAPOD_SETUP_CHOICES,max_length=150,default=None)
+    ma_pod_setup = models.BooleanField(choices=MAPOD_SETUP_CHOICES,max_length=150, default=None, blank=True)
     offer_resources = models.TextField(blank=True, max_length=1024)
     created_date = models.DateTimeField(default=timezone.now)
-    status = models.CharField(choices=REQUEST_STATUS_CHOICES, max_length=150, default=None)
+    status = models.CharField(choices=REQUEST_STATUS_CHOICES, max_length=150, default="New")
     last_edit = models.CharField(max_length=150)
 
     # def __str__(self):
