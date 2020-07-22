@@ -1,9 +1,12 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import RequestViewSet
+from .views import RequesterViewSet, VolunteerViewSet, VolunteeringViewSet
 
 router = routers.DefaultRouter()
-router.register(r'', RequestViewSet, basename='request')
+router.register(r'requester', RequesterViewSet, basename='requester')
+router.register(r'volunteer', VolunteerViewSet, basename='volunteer')
+router.register(r'volunteering', VolunteeringViewSet, basename='volunteering')
+
 
 app_name = 'requests'
 

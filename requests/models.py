@@ -31,11 +31,22 @@ class Request(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     status = models.CharField(choices=REQUEST_STATUS_CHOICES, max_length=150, default="New")
     last_edit = models.CharField(max_length=150)
-
-    # def __str__(self):
-    #     return "{} - rid: {}".format(self.requester, self.id)
+    volunteer_status = models.CharField(choices=VOLUNTEER_STATUS_CHOICES, max_length=150, default='Available')
 
 
+    def __str__(self):
+        return "Requester: {} | Request id: {}".format(self.requester, self.id)
 
 
+class Volunteer(models.Model):
+    supporter = models.ForeignKey(User, on_delete=models.CASCADE)
+    request = models.OneToOneField(Request, on_delete=models.CASCADE)
+    status = models.CharField(choices=VOLUNTEERING_STATUS_CHOICES, max_length=150, default=None)
+    created_date = models.DateTimeField(default=timezone.now)
+    #receipt image field
+    #total_cost
+    #reimbursement
+
+    def __str__(self):
+        return "Volunteer id {}".format(self.id)
 

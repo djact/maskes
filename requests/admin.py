@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Request
+from .models import Request, Volunteer
 from django.forms import TextInput, Textarea
 from django.db import models
 from django.utils import timezone
@@ -17,7 +17,7 @@ class RequestAdmin(admin.ModelAdmin):
     list_per_page = 25
 
     def save_model(self, request, obj, form, change):
-        if change:
+        if change and request.user.is_staff:
             month = str(timezone.now().month)
             day = str(timezone.now().day)
             admin = request.user.first_name
@@ -25,3 +25,4 @@ class RequestAdmin(admin.ModelAdmin):
         obj.save()
 
 admin.site.register(Request, RequestAdmin)
+admin.site.register(Volunteer)

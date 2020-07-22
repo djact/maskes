@@ -79,3 +79,13 @@ REQUEST_STATUS_CHOICES = (
     ("Completed","Completed"),
     ("Transferred","Transferred"),
 )
+
+VOLUNTEER_STATUS_CHOICES = (
+    ('Available','Available'),
+    ('Unavailable', 'Unavailable')
+)
+
+VOLUNTEERING_STATUS_CHOICES = (
+    ('Signed Up', 'Signed Up'),
+    ('Delivered', 'Delivered')
+)
