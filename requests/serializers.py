@@ -53,7 +53,7 @@ class VolunteeringDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Volunteer
-        fields = ['id','supporter','status','request','request_detail']
+        fields = ['id','supporter','status','request','request_detail', 'created_date']
     
     def get_request_detail(self, obj):
         request_detail = VolunteerDetailSerializer(obj.request).data
@@ -66,7 +66,7 @@ class VolunteeringListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Volunteer
-        fields = ['id','supporter','status','request','request_info']
+        fields = ['id','supporter','status','request','request_info', 'created_date']
 
     def get_request_info(self, obj):
         request_info = VolunteerListSerializer(obj.request).data
