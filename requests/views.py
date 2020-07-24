@@ -31,7 +31,7 @@ class VolunteerViewSet(ReadOnlyModelViewSet):
         return VolunteerDetailSerializer
     
     def get_queryset(self):
-        return Request.objects.filter(status='In Process').order_by('-created_date')
+        return Request.objects.filter(status='In Process').order_by('-created_date').order_by('volunteer_status')
 
     def post(self, request, format=None):
         queryset = self.filter_queryset(self.get_queryset())
@@ -50,6 +50,10 @@ class VolunteerViewSet(ReadOnlyModelViewSet):
         urgent = search_values['urgent']
         if urgent != '':
             queryset = queryset.filter(urgency__iexact=urgent)
+        
+        household_number = search_values['familySize']
+        if household_number != 1:
+            queryset = queryset.filter(household_number__gte=household_number)
         
         #pagination
         page = self.paginate_queryset(queryset)
@@ -74,7 +78,7 @@ class VolunteeringViewSet(ModelViewSet):
             serializer.update(instance, validated_data)
         except:
             serializer.save(supporter=self.request.user, status="Signed Up")
-            request.volunteer_status = 'Unavaiable'
+            request.volunteer_status = 'Unavailable'
             request.save()
 
     def perform_destroy(self, instance):

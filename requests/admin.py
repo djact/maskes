@@ -13,7 +13,7 @@ class RequestAdmin(admin.ModelAdmin):
     list_display_links = ('id',)
     list_filter = ('status','city')
     list_editable = ('status','items_list')
-    search_fields = ('requester__first_name','requester__last_name','phone','address1','city','zip_code',)
+    search_fields = ('id','requester__first_name','requester__last_name','phone','address1','city','zip_code',)
     list_per_page = 25
 
     def save_model(self, request, obj, form, change):
