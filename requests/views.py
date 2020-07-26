@@ -83,7 +83,7 @@ class VolunteeringViewSet(ModelViewSet):
 
     def perform_destroy(self, instance):
         request = instance.request
-        request.volunteer_status = 'Avaiable'
+        request.volunteer_status = 'Available'
         request.save()
         instance.delete()
 
