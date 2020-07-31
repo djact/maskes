@@ -87,5 +87,6 @@ VOLUNTEER_STATUS_CHOICES = (
 
 VOLUNTEERING_STATUS_CHOICES = (
     ('Signed Up', 'Signed Up'),
+    ('Ready', 'Ready'),
     ('Delivered', 'Delivered')
 )
