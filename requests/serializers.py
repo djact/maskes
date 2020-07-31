@@ -38,13 +38,24 @@ class RequesterListSerializer(serializers.ModelSerializer):
 class VolunteerDetailSerializer(serializers.ModelSerializer):
      class Meta:
         model = Request
-        fields = ['id','locations', 'household_number', 'urgency', 'items_list', 'food_restrictions', 'volunteer_status', 'created_date']
+        fields = ['id','locations', 'household_number', 'urgency', 'items_list', 'food_restrictions', 'volunteer_status', 'created_date',
+            'phone','address1','address2','city','zip_code',]
     
 
 class VolunteerListSerializer(serializers.ModelSerializer):
+    supporter = serializers.SerializerMethodField()
+
+    def get_supporter(self, obj):
+        try:
+            volunteer = Volunteer.objects.get(request=obj)
+            return volunteer.supporter.first_name
+        except: 
+            return None
+
+
     class Meta:
         model = Request
-        fields = ['id','locations', 'household_number', 'urgency', 'volunteer_status', 'created_date']
+        fields = ['id','locations', 'household_number', 'urgency', 'items_list', 'volunteer_status', 'created_date', 'supporter']
 
 
 class VolunteeringDetailSerializer(serializers.ModelSerializer):
