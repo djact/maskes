@@ -24,5 +24,13 @@ class RequestAdmin(admin.ModelAdmin):
             obj.last_edit = "{}-{} by {}".format(month,day,admin)
         obj.save()
 
+class VolunteerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'supporter', 'request', 'status','created_date')
+    list_display_links = ('id',)
+    list_filter = ('status',)
+    list_editable = ('status',)
+    search_fields = ('id','supporter__first_name', 'supporter__last_name', 'request__requester__first_name', 'request__requester__last_name', 'request__id')
+    list_per_page = 25
+
 admin.site.register(Request, RequestAdmin)
-admin.site.register(Volunteer)
+admin.site.register(Volunteer, VolunteerAdmin)
