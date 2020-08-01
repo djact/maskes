@@ -7,17 +7,17 @@ from django.contrib.auth.models import (AbstractBaseUser,
                                         BaseUserManager)
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, password=None):
+    def create_user(self, email, first_name, last_name, is_requester, is_volunteer, password=None):
         if not email:
             raise ValueError("user must have an email address")
         email = self.normalize_email(email)
-        user = self.model(email=email, first_name=first_name, last_name=last_name) #create a new model object
+        user = self.model(email=email, first_name=first_name, last_name=last_name, is_requester=is_requester, is_volunteer=is_volunteer) #create a new model object
         user.set_password(password)
         user.save()
         return user
     
-    def create_superuser(self, email, first_name, last_name, password):
-        user = self.create_user(email, first_name, last_name, password)
+    def create_superuser(self, email, first_name, last_name, is_requester, is_volunteer, password):
+        user = self.create_user(email, first_name, last_name, is_requester, is_volunteer, password)
 
         user.is_superuser = True
         user.is_staff = True
@@ -36,7 +36,7 @@ class UserAccount(AbstractBaseUser,PermissionsMixin):
     objects = UserAccountManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'is_volunteer','is_requester']
 
     class Meta:
         verbose_name = 'Account'
