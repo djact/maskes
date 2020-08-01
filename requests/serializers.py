@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Request, Volunteer
 from django.contrib.auth import get_user_model
+from funds.serializers import ReimbursementSerializer
+from funds.models import Reimbursement
 User = get_user_model()
 
 class RequesterDetailSerializer(serializers.ModelSerializer):
@@ -61,14 +63,23 @@ class VolunteerListSerializer(serializers.ModelSerializer):
 class VolunteeringDetailSerializer(serializers.ModelSerializer):
     supporter = serializers.ReadOnlyField(source='supporter.email')
     request_detail = serializers.SerializerMethodField(read_only=True)
+    reimbursement_detail = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Volunteer
-        fields = ['id','supporter','status','request','request_detail', 'created_date']
+        fields = ['id','supporter','status','request','request_detail', 'reimbursement_detail', 'created_date']
     
     def get_request_detail(self, obj):
         request_detail = VolunteerDetailSerializer(obj.request).data
         return request_detail
+    
+    def get_reimbursement_detail(self, obj):
+        try:
+            queryset = Reimbursement.objects.get(volunteer=obj)
+            reimbursement_detail = ReimbursementSerializer(queryset).data 
+            return reimbursement_detail
+        except:
+            return None
     
 class VolunteeringListSerializer(serializers.ModelSerializer):
     supporter = serializers.ReadOnlyField(source='supporter.first_name')

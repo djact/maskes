@@ -1,4 +1,6 @@
 from rest_framework import permissions
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
@@ -23,3 +25,10 @@ class IsOwner(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return obj.requester == request.user
+
+class IsVolunteerOnly(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_volunteer
+    
+    def has_object_permission(self, request, view, obj):
+        return request.user.is_volunteer
