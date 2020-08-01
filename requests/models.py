@@ -43,10 +43,7 @@ class Volunteer(models.Model):
     request = models.OneToOneField(Request, on_delete=models.CASCADE)
     status = models.CharField(choices=VOLUNTEERING_STATUS_CHOICES, max_length=150, default=None)
     created_date = models.DateTimeField(default=timezone.now)
-    #receipt image field
-    #total_cost
-    #reimbursement
 
     def __str__(self):
-        return "Volunteer id {}".format(self.id)
+        return "Volunteer #{}".format(self.id)
 
