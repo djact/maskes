@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'djoser',
     'users.apps.UsersConfig',
     'requests.apps.RequestsConfig',
+    'funds.apps.FundsConfig',
 ]
 
 MIDDLEWARE = [
