@@ -7,17 +7,25 @@ from django.contrib.auth.models import (AbstractBaseUser,
                                         BaseUserManager)
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, is_requester, is_volunteer, password=None):
+    def create_user(self, email, first_name, last_name, 
+        display_name, is_requester, is_volunteer, password=None):
         if not email:
             raise ValueError("user must have an email address")
         email = self.normalize_email(email)
-        user = self.model(email=email, first_name=first_name, last_name=last_name, is_requester=is_requester, is_volunteer=is_volunteer) #create a new model object
+        user = self.model(
+            email=email, 
+            first_name=first_name, 
+            last_name=last_name, 
+            display_name=display_name, 
+            is_requester=is_requester, 
+            is_volunteer=is_volunteer) #create a new model object
         user.set_password(password)
         user.save()
         return user
     
-    def create_superuser(self, email, first_name, last_name, is_requester, is_volunteer, password):
-        user = self.create_user(email, first_name, last_name, is_requester, is_volunteer, password)
+    def create_superuser(self, email, first_name, last_name, 
+        display_name, is_requester, is_volunteer, password):
+        user = self.create_user(email, first_name, last_name, display_name, is_requester, is_volunteer, password)
 
         user.is_superuser = True
         user.is_staff = True
@@ -27,6 +35,7 @@ class UserAccount(AbstractBaseUser,PermissionsMixin):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     email = models.EmailField(max_length=255, unique=True)
+    display_name = models.CharField(max_length=150, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_volunteer = models.BooleanField(default=False)
@@ -40,6 +49,11 @@ class UserAccount(AbstractBaseUser,PermissionsMixin):
 
     class Meta:
         verbose_name = 'Account'
+
+    def save(self, *args, **kwargs):
+        if self.display_name=='anonymous user':
+            self.display_name = self.email.split('@')[0]
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)

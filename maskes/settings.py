@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'requests.apps.RequestsConfig',
     'funds.apps.FundsConfig',
+    'connect.apps.ConnectConfig',
 ]
 
 MIDDLEWARE = [

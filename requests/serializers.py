@@ -3,6 +3,8 @@ from .models import Request, Volunteer
 from django.contrib.auth import get_user_model
 from funds.serializers import ReimbursementSerializer
 from funds.models import Reimbursement
+from connect.models import Comment, Reply
+from connect.serializers import CommentDetailSerializer, CommentListSerializer
 User = get_user_model()
 
 class RequesterDetailSerializer(serializers.ModelSerializer):
@@ -13,7 +15,7 @@ class RequesterDetailSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     status = serializers.ReadOnlyField()
     created_date = serializers.ReadOnlyField()
-    
+
     class Meta:
         model = Request
         exclude = ['last_edit']
@@ -38,10 +40,17 @@ class RequesterListSerializer(serializers.ModelSerializer):
         return obj.requester.first_name
 
 class VolunteerDetailSerializer(serializers.ModelSerializer):
-     class Meta:
+    comments = serializers.SerializerMethodField()
+
+    class Meta:
         model = Request
         fields = ['id','locations', 'household_number', 'urgency', 'items_list', 'food_restrictions', 'volunteer_status', 'created_date',
-            'phone','address1','address2','city','zip_code',]
+            'phone','address1','address2','city','zip_code', 'comments']
+    
+    def get_comments(self, obj):
+        queryset = Comment.objects.filter(request=obj)
+        comments = CommentDetailSerializer(queryset, many=True).data
+        return [{comment['id']:comment['comment_content']} for comment in comments]
     
 
 class VolunteerListSerializer(serializers.ModelSerializer):
