@@ -8,24 +8,23 @@ from django.contrib.auth.models import (AbstractBaseUser,
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, 
-        display_name, is_requester, is_volunteer, password=None):
+        is_requester, is_volunteer, password=None):
         if not email:
             raise ValueError("user must have an email address")
         email = self.normalize_email(email)
         user = self.model(
             email=email, 
             first_name=first_name, 
-            last_name=last_name, 
-            display_name=display_name, 
-            is_requester=is_requester, 
+            last_name=last_name,
+            is_requester=is_requester,
             is_volunteer=is_volunteer) #create a new model object
         user.set_password(password)
         user.save()
         return user
     
     def create_superuser(self, email, first_name, last_name, 
-        display_name, is_requester, is_volunteer, password):
-        user = self.create_user(email, first_name, last_name, display_name, is_requester, is_volunteer, password)
+        is_requester, is_volunteer, password):
+        user = self.create_user(email, first_name, last_name, is_requester, is_volunteer, password)
 
         user.is_superuser = True
         user.is_staff = True
@@ -51,7 +50,7 @@ class UserAccount(AbstractBaseUser,PermissionsMixin):
         verbose_name = 'Account'
 
     def save(self, *args, **kwargs):
-        if self.display_name=='anonymous user':
+        if not self.display_name:
             self.display_name = self.email.split('@')[0]
         return super().save(*args, **kwargs)
 

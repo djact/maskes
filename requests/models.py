@@ -32,6 +32,7 @@ class Request(models.Model):
     status = models.CharField(choices=REQUEST_STATUS_CHOICES, max_length=150, default="New")
     last_edit = models.CharField(max_length=150)
     volunteer_status = models.CharField(choices=VOLUNTEER_STATUS_CHOICES, max_length=150, default='Available')
+    admin_notes = models.TextField(blank=True, null=True)
 
 
     def __str__(self):
