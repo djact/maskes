@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'requests.apps.RequestsConfig',
     'funds.apps.FundsConfig',
     'connect.apps.ConnectConfig',
+    'templated_mail',
 ]
 
 MIDDLEWARE = [
@@ -167,8 +168,11 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
+DOMAIN = 'localhost:3000'
+SITE_NAME = 'maskes'
+
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'users/password_reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password-reset-confirm/{uid}/{token}',
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': '#/activate/{uid}/{token}',

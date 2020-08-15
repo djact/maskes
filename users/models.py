@@ -8,7 +8,7 @@ from django.contrib.auth.models import (AbstractBaseUser,
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, 
-        is_requester, is_volunteer, password=None):
+        is_requester, is_volunteer, password=None, display_name=None):
         if not email:
             raise ValueError("user must have an email address")
         email = self.normalize_email(email)
@@ -16,6 +16,7 @@ class UserAccountManager(BaseUserManager):
             email=email, 
             first_name=first_name, 
             last_name=last_name,
+            display_name=display_name,
             is_requester=is_requester,
             is_volunteer=is_volunteer) #create a new model object
         user.set_password(password)
@@ -44,7 +45,7 @@ class UserAccount(AbstractBaseUser,PermissionsMixin):
     objects = UserAccountManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'is_volunteer','is_requester']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'is_volunteer','is_requester', 'display_name']
 
     class Meta:
         verbose_name = 'Account'
@@ -76,6 +77,17 @@ class UserProfile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     bio = models.TextField(blank=True)
     phone = models.CharField(max_length=25, blank=True)
+    facebook = models.CharField(max_length=25, blank=True)
+    twitter = models.CharField(max_length=25, blank=True)
+    venmo = models.CharField(max_length=25, blank=True)
+    location = models.CharField(max_length=255, blank=True)
+    created_date = models.DateTimeField(default=timezone.now)
+
+    fullname_privacy = models.BooleanField(default=True)
+    email_privacy = models.BooleanField(default=True)
+    phone_privacy = models.BooleanField(default=True)
+    location_privacy = models.BooleanField(default=True)
+
 
     class Meta:
         verbose_name = 'Profile'
