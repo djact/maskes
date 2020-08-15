@@ -19,6 +19,10 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
 
+admin.site.site_header = "MASKES Admin"
+admin.site.site_title = "MASKES Admin Portal"
+admin.site.index_title = "Welcome to Mutual Aid South King County & East Side Portal"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls', namespace='user')),
