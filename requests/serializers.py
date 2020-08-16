@@ -54,12 +54,15 @@ class VolunteerDetailSerializer(serializers.ModelSerializer):
     
 
 class VolunteerListSerializer(serializers.ModelSerializer):
-    supporter = serializers.SerializerMethodField()
+    supporter = serializers.SerializerMethodField(read_only=True)
 
     def get_supporter(self, obj):
         try:
             volunteer = Volunteer.objects.get(request=obj)
-            return volunteer.supporter.first_name
+            return {
+                "display_name": volunteer.supporter.display_name,
+                "id": volunteer.supporter.id,
+            }
         except: 
             return None
 

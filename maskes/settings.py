@@ -213,5 +213,5 @@ JAZZMIN_SETTINGS = {
     'search_model': 'auth.User',
 
     # Field name on user model that contains avatar image
-    'user_avatar': 'media/default.jpg',
+    'user_avatar': 'user.userprofile.image',
 }
