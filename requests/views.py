@@ -6,7 +6,7 @@ from .serializers import (RequesterDetailSerializer, RequesterListSerializer,
                             VolunteerDetailSerializer, VolunteerListSerializer,
                                 VolunteeringDetailSerializer, VolunteeringListSerializer,)
 from .models import Request, Volunteer
-from .permissions import IsOwner, IsOwnerOrReadOnly
+from .permissions import IsOwner, IsOwnerOrReadOnly, IsVolunteerOnly
 
 class RequesterViewSet(ModelViewSet):
     permission_classes = [IsOwner, IsAuthenticated]
@@ -23,7 +23,7 @@ class RequesterViewSet(ModelViewSet):
         serializer.save(requester=self.request.user)
 
 class VolunteerViewSet(ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsVolunteerOnly]
 
     def get_serializer_class(self):
         if self.action == 'list':
@@ -31,7 +31,9 @@ class VolunteerViewSet(ReadOnlyModelViewSet):
         return VolunteerDetailSerializer
     
     def get_queryset(self):
-        return Request.objects.filter(status='In Process').order_by('-created_date').order_by('volunteer_status')
+        if self.request.user.is_volunteer:
+            return Request.objects.filter(status='In Process').order_by('-created_date')
+        else: return None
 
     def post(self, request, format=None):
         queryset = self.filter_queryset(self.get_queryset())
@@ -55,13 +57,17 @@ class VolunteerViewSet(ReadOnlyModelViewSet):
         if household_number != 1:
             queryset = queryset.filter(household_number__gte=household_number)
         
+        request_no = search_values['requestId']
+        if request_no != '':
+            queryset = queryset.filter(id__iexact=request_no)
+        
         #pagination
         page = self.paginate_queryset(queryset)
         serializer = VolunteerListSerializer(page, many=True)
         return self.get_paginated_response(serializer.data)
 
 class VolunteeringViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsVolunteerOnly]
 
     def get_serializer_class(self):
         if self.action == 'list':

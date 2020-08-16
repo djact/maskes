@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +49,9 @@ INSTALLED_APPS = [
     'djoser',
     'users.apps.UsersConfig',
     'requests.apps.RequestsConfig',
+    'funds.apps.FundsConfig',
+    'connect.apps.ConnectConfig',
+    'templated_mail',
 ]
 
 MIDDLEWARE = [
@@ -165,10 +169,14 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
+DOMAIN = 'localhost:3000'
+SITE_NAME = 'maskes'
+
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'users/password_reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password-reset-confirm/{uid}/{token}',
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'email-reset-confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_RETYPE': True,
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {},
@@ -184,3 +192,26 @@ EMAIL_USE_TLS = True
 
 
 AUTH_USER_MODEL = 'users.UserAccount'
+
+JAZZMIN_SETTINGS = {
+    # title of the window
+    'site_title': 'MASKES Admin Portal',
+
+    # Title on the brand, and the login screen (19 chars max)
+    'site_header': 'MASKES Admin',
+
+    # square logo to use for your site, must be present in static files, used for favicon and brand on top left
+    # 'site_logo': 'polls/img/logo.png',
+
+    # Welcome text on the login screen
+    'welcome_sign': 'Welcome to Mutual Aid South King County & East Side Portal',
+
+    # Copyright on the footer
+    'copyright': 'MASKES',
+
+    # The model admin to search from the search bar, search bar omitted if excluded
+    'search_model': 'auth.User',
+
+    # Field name on user model that contains avatar image
+    'user_avatar': 'user.userprofile.image',
+}

@@ -32,6 +32,7 @@ class Request(models.Model):
     status = models.CharField(choices=REQUEST_STATUS_CHOICES, max_length=150, default="New")
     last_edit = models.CharField(max_length=150)
     volunteer_status = models.CharField(choices=VOLUNTEER_STATUS_CHOICES, max_length=150, default='Available')
+    admin_notes = models.TextField(blank=True, null=True)
 
 
     def __str__(self):
@@ -43,10 +44,7 @@ class Volunteer(models.Model):
     request = models.OneToOneField(Request, on_delete=models.CASCADE)
     status = models.CharField(choices=VOLUNTEERING_STATUS_CHOICES, max_length=150, default=None)
     created_date = models.DateTimeField(default=timezone.now)
-    #receipt image field
-    #total_cost
-    #reimbursement
 
     def __str__(self):
-        return "Volunteer id {}".format(self.id)
+        return "Volunteer #{}".format(self.id)
 
