@@ -38,7 +38,16 @@ class CommentViewSet(viewsets.ModelViewSet):
 class ReplyViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     queryset = Reply.objects.all().order_by('-created_date')
-    serializer_class = serializers.ReplyListSerializer
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return serializers.ReplyListSerializer
+        return serializers.ReplyDetailSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
 
        
             
