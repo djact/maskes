@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'djoser',
     'users.apps.UsersConfig',
     'requests.apps.RequestsConfig',
@@ -164,8 +165,8 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
@@ -195,10 +196,10 @@ AUTH_USER_MODEL = 'users.UserAccount'
 
 JAZZMIN_SETTINGS = {
     # title of the window
-    'site_title': 'MASKES Admin Portal',
+    'site_title': 'SKESMA Admin Portal',
 
     # Title on the brand, and the login screen (19 chars max)
-    'site_header': 'MASKES Admin',
+    'site_header': 'SKESMA Admin',
 
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
     # 'site_logo': 'polls/img/logo.png',
@@ -207,7 +208,7 @@ JAZZMIN_SETTINGS = {
     'welcome_sign': 'Welcome to Mutual Aid South King County & East Side Portal',
 
     # Copyright on the footer
-    'copyright': 'MASKES',
+    'copyright': 'SKESMA',
 
     # The model admin to search from the search bar, search bar omitted if excluded
     'search_model': 'auth.User',
