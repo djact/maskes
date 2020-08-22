@@ -1,5 +1,5 @@
 env/
-build/logo/
+build/
 .env
 generate_faker.py
 fake_list.py
@@ -7,3 +7,5 @@ maskes-ui/
 backup/
 media/
 venv/
+*/__pycache__/
+migrations/
