@@ -1,5 +1,6 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from .serializers import CustomTokenObtainPairSerializer, ProfileSerializer
 
 from rest_framework import viewsets, status
@@ -11,10 +12,26 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .permissions import IsOwnerOrReadOnly
 
 from .models import UserProfile
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import get_user_model
+from django.contrib.auth.signals import user_logged_in
 # Create your views here.
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+    
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        User = get_user_model()
+        try:
+            serializer.is_valid(raise_exception=True)
+            user = User.objects.get(email=request.data['email'])
+            token, created = Token.objects.get_or_create(user=user)
+            user_logged_in.send(sender=user.__class__, request=request, user=user)
+            print(user.last_login)
+        except TokenError as e:
+            raise InvalidToken(e.args[0])
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
