@@ -24,6 +24,7 @@ admin.site.site_title = "MASKES Admin Portal"
 admin.site.index_title = "Welcome to Mutual Aid South King County & East Side Portal"
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='index.html')),
     path('admin/', admin.site.urls),
     path('', include('users.urls', namespace='user')),
     # path('', include('djoser.urls')),
