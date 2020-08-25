@@ -212,8 +212,65 @@ JAZZMIN_SETTINGS = {
     'copyright': 'SKCEMA',
 
     # The model admin to search from the search bar, search bar omitted if excluded
-    'search_model': 'auth.User',
+    'search_model': 'users.UserAccount',
+
+    # 'hide_apps': ['authtoken','token_blacklist'],
+
+    'topmenu_links': [
+
+        # Url that gets reversed (Permissions can be added)
+        {'name': 'Home',  'url': 'admin:index', 'permissions': ['auth.view_user']},
+
+        # external url that opens in a new window (Permissions can be added)
+        {'name': 'Site', 'url': 'https://skcema.org/', 'new_window': True},
+
+        # model admin to link to (Permissions checked against model)
+        {'model': 'users.UserAccount'},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        {'app': 'requests'},
+    ],
+
+    'usermenu_links': [
+        {'name': 'Profile', 'url': 'http://localhost:3000/profile/me/', 'new_window': True},
+    ],
+
+    'show_sidebar': True,
+
+    'order_with_respect_to': ['requests', 'funds', 'users', 'connect'],
+
+    'icons': {
+        'users': 'fas fa-users-cog',
+        'users.UserAccount': 'fas fa-user',
+        'users.UserAddress': 'fas fa-map-marked',
+        'users.UserProfile': 'fas fa-address-card',
+        'auth.Group': 'fas fa-users',
+        'requests.Request': 'fas fa-mail-bulk',
+        'requests.Volunteer': 'fas fa-project-diagram',
+        'funds.Reimbursement': 'fas fa-comment-dollar',
+        'connect.Comment': 'fas fa-comments',
+        'connect.Reply': 'fas fa-reply',
+    },
 
     # Field name on user model that contains avatar image
-    'user_avatar': 'user.userprofile.image',
+    'user_avatar': 'users.UserProfile.image',
+
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-lightblue",
+    "navbar": "navbar-dark",
+    "no_navbar_border": False,
+    "sidebar": "sidebar-dark-warning",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": True,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False
 }

@@ -32,7 +32,7 @@ class VolunteerViewSet(ReadOnlyModelViewSet):
     
     def get_queryset(self):
         if self.request.user.is_volunteer:
-            return Request.objects.filter(status='In Process').order_by('-created_date')
+            return Request.objects.filter(status='In Process').order_by('-created_date').order_by("volunteer_status")
         else: return None
 
     def post(self, request, format=None):

@@ -8,10 +8,11 @@ User = get_user_model()
 
 class Reimbursement(models.Model):
     volunteer = models.OneToOneField(Volunteer, on_delete=models.CASCADE)
-    receipt_photo = models.ImageField(default=None, upload_to='receipt_photos/%Y/%m/%d/', null=True)
+    receipt_photo = models.ImageField(default=None, upload_to='receipt_photos/%Y/%m/%d/', null=True, blank=True)
     total_cost = models.DecimalField(max_digits=5, decimal_places=2)
     amount = models.DecimalField(max_digits=5, decimal_places=2)
     status = models.CharField(choices=(('In Process', 'In Process'),('Completed','Completed')), max_length=150, default=None)
+    volunteer_notes = models.TextField(blank=True, null=True, max_length=1024)
     created_date = models.DateTimeField(default=timezone.now)
     
     def save(self, *args, **kwargs):

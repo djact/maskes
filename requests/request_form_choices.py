@@ -33,6 +33,7 @@ CITY_CHOICES = (
     ("Redmond","Redmond"),
     ("Renton","Renton"),
     ("Sammamish","Sammamish"),
+    ("SeaTac","SeaTac"),
     ("Snoqualmie","Snoqualmie"),
     ("Sumner","Sumner"),
     ("Tukwila","Tukwila"),

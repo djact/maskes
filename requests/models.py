@@ -17,12 +17,12 @@ class Request(models.Model):
     agree_transfer = models.BooleanField(choices=AGREE_TRANSFER_CHOICES),
     #accept a list of items
     prefered_food = models.TextField(max_length=1024)
-    items_list = models.TextField()
+    items_list = models.TextField(max_length=2048)
     food_restrictions = models.TextField(default=None, blank=True)
     household_number = models.SmallIntegerField(default=1)
     urgency = models.CharField(choices=URGENCY_CHOICES, max_length=150)
     financial_support = models.CharField(choices=FINANCIAL_SUPPORT_CHOICES,max_length=150)
-    special_info = models.TextField(blank=True)
+    special_info = models.TextField(blank=True, max_length=1024)
     share_info = models.BooleanField(choices=SHARE_INFO_CHOICES)
     need_checkin = models.CharField(choices=NEED_CHECKIN_CHOICES,max_length=150)
     extra_info = models.TextField(blank=True, max_length=1024)
@@ -32,11 +32,11 @@ class Request(models.Model):
     status = models.CharField(choices=REQUEST_STATUS_CHOICES, max_length=150, default="New")
     last_edit = models.CharField(max_length=150)
     volunteer_status = models.CharField(choices=VOLUNTEER_STATUS_CHOICES, max_length=150, default='Available')
-    admin_notes = models.TextField(blank=True, null=True)
+    admin_notes = models.TextField(blank=True, null=True, max_length=1024)
 
 
     def __str__(self):
-        return "Requester: {} | Request id: {}".format(self.requester, self.id)
+        return "#{} - {}".format(self.id, self.requester)
 
 
 class Volunteer(models.Model):
@@ -44,6 +44,7 @@ class Volunteer(models.Model):
     request = models.OneToOneField(Request, on_delete=models.CASCADE)
     status = models.CharField(choices=VOLUNTEERING_STATUS_CHOICES, max_length=150, default=None)
     created_date = models.DateTimeField(default=timezone.now)
+    admin_notes = models.TextField(blank=True, null=True, max_length=1024)
 
     def __str__(self):
         return "Volunteer #{}".format(self.id)
