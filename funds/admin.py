@@ -10,7 +10,7 @@ class ReimbursementAdmin(admin.ModelAdmin):
     list_filter = ('status',)
     list_editable = ('status',)
     search_fields = ('id','volunteer__id',)
-    readonly_fields = ('request',)
+    readonly_fields = ('request','created_date')
     list_per_page = 25
 
     def request(self, obj):

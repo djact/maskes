@@ -32,7 +32,7 @@ class VolunteerViewSet(ReadOnlyModelViewSet):
     
     def get_queryset(self):
         if self.request.user.is_volunteer:
-            return Request.objects.filter(status='In Process').order_by('-created_date').order_by("volunteer_status")
+            return (Request.objects.filter(status='In Process') | Request.objects.filter(status='Completed')).order_by('volunteer_status','-created_date')
         else: return None
 
     def post(self, request, format=None):
@@ -79,14 +79,24 @@ class VolunteeringViewSet(ModelViewSet):
     
     def perform_create(self, serializer):
         request = serializer.validated_data.get('request')
+        request.volunteer_status = 'Unavailable'
+        request.save()
         try:
             instance = Volunteer.objects.get(request=request,supporter=self.request.user)
             serializer.update(instance, validated_data)
         except:
             serializer.save(supporter=self.request.user, status="Signed Up")
-            request.volunteer_status = 'Unavailable'
-            request.save()
-
+    
+    def perform_update(self, serializer):
+        request = serializer.validated_data.get('request')
+        status = serializer.validated_data.get('status')
+        if status == 'Delivered':
+            request.status = "Completed"
+        else:
+            request.status = "In Process"
+        request.save()
+        serializer.save()
+        
     def perform_destroy(self, instance):
         request = instance.request
         request.volunteer_status = 'Available'

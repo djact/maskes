@@ -21,7 +21,7 @@ class Comment(models.Model):
         self.save()
 
     def __str__(self):
-        return self.comment_content
+        return '#{}-{}'.format(self.id, self.author)
 
 class Reply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')

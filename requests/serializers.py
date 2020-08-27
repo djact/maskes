@@ -41,16 +41,18 @@ class RequesterListSerializer(serializers.ModelSerializer):
 
 class VolunteerDetailSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
+    requester = serializers.ReadOnlyField(source='requester.first_name')
 
     class Meta:
         model = Request
-        fields = ['id','locations', 'household_number', 'urgency', 'items_list', 'food_restrictions', 'volunteer_status', 'created_date',
+        fields = ['id','requester', 'locations', 'household_number', 'urgency', 'items_list', 'food_restrictions', 'volunteer_status', 'created_date',
             'phone','address1','address2','city','zip_code', 'comments']
     
     def get_comments(self, obj):
         queryset = Comment.objects.filter(request=obj)
         comments = CommentDetailSerializer(queryset, many=True).data
         return [{comment['id']:comment['comment_content']} for comment in comments]
+    
     
 
 class VolunteerListSerializer(serializers.ModelSerializer):

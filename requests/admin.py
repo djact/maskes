@@ -15,10 +15,10 @@ class RequestAdmin(admin.ModelAdmin):
     list_display = ('id', 'last_edit', 'status','requester_link','phone','city','items_list','urgency','created_date')
     list_display_links = ('id',)
     list_filter = ('status','city', 'volunteer_status')
-    list_editable = ('status','items_list')
+    list_editable = ('status',)
     search_fields = ('id','requester__first_name','requester__last_name','phone','address1','city','zip_code',)
     list_per_page = 25
-    readonly_fields = ('requester_link',)
+    readonly_fields = ('id','requester_link','volunteer_status', 'created_date')
 
     def requester_link(self, obj):
         return mark_safe('<a href="{}">{}</a>'.format(
@@ -40,13 +40,36 @@ class VolunteerAdmin(admin.ModelAdmin):
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
     }
-    list_display = ('id', 'supporter','request_link', 'reimbursement_link', 'status','created_date')
+    list_display = ('id','supporter_account','request_link', 'reimbursement_link', 'status','created_date')
     list_display_links = ('id',)
     list_filter = ('status',)
     list_editable = ('status',)
     search_fields = ('id','supporter__first_name', 'supporter__last_name', 'request__requester__first_name', 'request__requester__last_name', 'request__id')
     list_per_page = 25
-    readonly_fields = ('supporter','request', 'request_link','reimbursement_link')
+    readonly_fields = ('supporter_account', 'request_link','reimbursement_link','created_date')
+
+    def save_model(self, request, obj, form, change):
+        try:
+            instance = Request.objects.get(id=obj.request.id)
+            instance.volunteer_status = 'Unavailable'
+            if obj.status == 'Delivered':
+                instance.status = 'Completed'
+            else:
+                instance.status = 'In Process'
+            instance.save()
+        except:
+            pass
+        obj.save()
+
+    def delete_model(self, request, obj):
+        try:
+            instance = Request.objects.get(id=obj.request.id)
+            instance.volunteer_status = 'Available'
+            instance.status = 'In Process'
+            instance.save()
+        except:
+            pass
+        obj.delete()
 
     def request_link(self, obj):
         return mark_safe('<a href="{}">{}</a>'.format(
@@ -65,6 +88,12 @@ class VolunteerAdmin(admin.ModelAdmin):
         except:
             return None 
     reimbursement_link.short_description = 'Reimbursement Info'
+
+    def supporter_account(self, obj):
+        return mark_safe('<a href="{}">{}</a>'.format(
+            reverse('admin:%s_%s_change' % (obj.supporter._meta.app_label,  obj.supporter._meta.model_name),  args=[obj.supporter.id] ),
+            obj.supporter))
+    supporter_account.short_description = 'Supporter Account'
 
 admin.site.register(Request, RequestAdmin)
 admin.site.register(Volunteer, VolunteerAdmin)

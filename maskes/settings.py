@@ -235,6 +235,9 @@ JAZZMIN_SETTINGS = {
         {'name': 'Profile', 'url': 'http://localhost:3000/profile/me/', 'new_window': True},
     ],
 
+    # Hide these apps when generating side menu e.g (auth)
+    'hide_apps': ['token_blacklist', 'authtoken',],
+
     'show_sidebar': True,
 
     'order_with_respect_to': ['requests', 'funds', 'users', 'connect'],
@@ -270,7 +273,7 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_small_text": False,
     "sidebar_disable_expand": False,
     "sidebar_nav_child_indent": False,
-    "sidebar_nav_compact_style": True,
+    "sidebar_nav_compact_style": False,
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False
 }

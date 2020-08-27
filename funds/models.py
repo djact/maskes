@@ -7,7 +7,7 @@ from requests.models import Volunteer
 User = get_user_model()
 
 class Reimbursement(models.Model):
-    volunteer = models.OneToOneField(Volunteer, on_delete=models.CASCADE)
+    volunteer = models.OneToOneField(Volunteer, on_delete=models.CASCADE, verbose_name = "Support ID")
     receipt_photo = models.ImageField(default=None, upload_to='receipt_photos/%Y/%m/%d/', null=True, blank=True)
     total_cost = models.DecimalField(max_digits=5, decimal_places=2)
     amount = models.DecimalField(max_digits=5, decimal_places=2)
