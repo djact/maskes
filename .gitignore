@@ -5,8 +5,9 @@ generate_faker.py
 fake_list.py
 maskes-ui/
 backup/
-media/
 venv/
 __pycache__/
 migrations/
 db.sqlite3
+profile_pics/
+receipt_photos
