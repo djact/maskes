@@ -15,7 +15,7 @@ class RequestAdmin(admin.ModelAdmin):
     list_display = ('id', 'last_edit', 'status','requester_link','phone','city','items_list','urgency','created_date')
     list_display_links = ('id',)
     list_filter = ('status','city', 'volunteer_status')
-    list_editable = ('status',)
+    list_editable = ('status','items_list')
     search_fields = ('id','requester__first_name','requester__last_name','phone','address1','city','zip_code',)
     list_per_page = 25
     readonly_fields = ('id','requester_link','volunteer_status', 'created_date')

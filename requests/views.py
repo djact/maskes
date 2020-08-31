@@ -53,9 +53,15 @@ class VolunteerViewSet(ReadOnlyModelViewSet):
         if urgent != '':
             queryset = queryset.filter(urgency__iexact=urgent)
         
-        household_number = search_values['familySize']
-        if household_number != 1:
-            queryset = queryset.filter(household_number__gte=household_number)
+        try:
+            household_number = int(search_values['familySize'])
+            if household_number != 0:
+                if household_number >= 8:
+                    queryset = queryset.filter(household_number__gte=household_number)
+                else:
+                    queryset = queryset.filter(household_number__iexact=household_number)
+        except:
+            pass
         
         request_no = search_values['requestId']
         if request_no != '':
