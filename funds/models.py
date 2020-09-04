@@ -24,4 +24,15 @@ class Reimbursement(models.Model):
             img.save(self.receipt_photo.path, quality=75)
     
     def __str__(self):
-        return 'Amount: {}'.format(self.amount);
+        return '{} - {} - ${}'.format(self.id, self.volunteer.supporter.display_name, self.amount);
+
+class Donation(models.Model):
+    donator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = "Donator")
+    reimbursement = models.ForeignKey(Reimbursement, on_delete=models.CASCADE, verbose_name = "Reimbursement ID")
+    amount = amount = models.DecimalField(max_digits=5, decimal_places=2)
+    created_date = models.DateTimeField(default=timezone.now)
+    updated_date = models.DateTimeField(default=timezone.now)
+    status = models.CharField(choices=(('Pending', 'Pending'),('Sent','Sent')), max_length=150, default='Pending')
+
+    def __str__(self):
+        return 'Donate Amount: {}'.format(self.amount);

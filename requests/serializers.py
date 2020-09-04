@@ -42,16 +42,29 @@ class RequesterListSerializer(serializers.ModelSerializer):
 class VolunteerDetailSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     requester = serializers.ReadOnlyField(source='requester.first_name')
+    reimbursement =serializers.SerializerMethodField()
 
     class Meta:
         model = Request
         fields = ['id','requester', 'locations', 'household_number', 'urgency', 'items_list', 'food_restrictions', 'volunteer_status', 'created_date',
-            'phone','address1','address2','city','zip_code', 'comments']
+            'phone','address1','address2','city','zip_code', 'comments', 'reimbursement']
     
     def get_comments(self, obj):
         queryset = Comment.objects.filter(request=obj)
         comments = CommentDetailSerializer(queryset, many=True).data
         return [{comment['id']:comment['comment_content']} for comment in comments]
+
+    def get_reimbursement(self, obj):
+        try:
+            volunteer = Volunteer.objects.get(request=obj)
+            reimbursement = Reimbursement.objects.get(volunteer=volunteer)
+            return { "reimbursement_supporter":reimbursement.volunteer.supporter.display_name, 
+            "reimbursement_supporter_id": reimbursement.volunteer.supporter.id, 
+            "reimbursement_status": reimbursement.status, 
+            "reimbursement_amount": reimbursement.amount,
+            "reimbursement_id": reimbursement.id}
+        except:
+            return None
     
     
 

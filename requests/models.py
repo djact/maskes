@@ -18,11 +18,11 @@ class Request(models.Model):
     #accept a list of items
     prefered_food = models.TextField(max_length=1024)
     items_list = models.TextField(max_length=2048)
-    food_restrictions = models.TextField(default=None, blank=True)
+    food_restrictions = models.TextField(default=None, blank=True, max_length=1024)
     household_number = models.SmallIntegerField("Family Size",default=1)
     urgency = models.CharField(choices=URGENCY_CHOICES, max_length=150)
     financial_support = models.CharField(choices=FINANCIAL_SUPPORT_CHOICES,max_length=150)
-    special_info = models.TextField(blank=True, max_length=1024)
+    special_info = models.TextField(blank=True, max_length=2048)
     share_info = models.BooleanField(choices=SHARE_INFO_CHOICES)
     need_checkin = models.CharField(choices=NEED_CHECKIN_CHOICES,max_length=150)
     extra_info = models.TextField(blank=True, max_length=1024)
