@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Reimbursement
+from .models import Reimbursement, Donation
 
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -29,3 +29,4 @@ class ReimbursementAdmin(admin.ModelAdmin):
 
     
 admin.site.register(Reimbursement, ReimbursementAdmin);
+admin.site.register(Donation);
