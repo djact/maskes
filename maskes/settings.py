@@ -243,6 +243,7 @@ JAZZMIN_SETTINGS = {
 
     'order_with_respect_to': ['requests', 'funds', 'users', 'connect'],
 
+    # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
     'icons': {
         'users': 'fas fa-users-cog',
         'users.UserAccount': 'fas fa-user',
@@ -252,6 +253,7 @@ JAZZMIN_SETTINGS = {
         'requests.Request': 'fas fa-mail-bulk',
         'requests.Volunteer': 'fas fa-project-diagram',
         'funds.Reimbursement': 'fas fa-comment-dollar',
+        'funds.Donation': 'fas fa-dollar-sign',
         'connect.Comment': 'fas fa-comments',
         'connect.Reply': 'fas fa-reply',
     },
