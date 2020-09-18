@@ -42,12 +42,13 @@ class RequesterListSerializer(serializers.ModelSerializer):
 class VolunteerDetailSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     requester = serializers.ReadOnlyField(source='requester.first_name')
-    reimbursement =serializers.SerializerMethodField()
+    reimbursement = serializers.SerializerMethodField()
+    delivery_status = serializers.SerializerMethodField()
 
     class Meta:
         model = Request
         fields = ['id','requester', 'locations', 'household_number', 'urgency', 'items_list', 'food_restrictions', 'volunteer_status', 'created_date',
-            'phone','address1','address2','city','zip_code', 'comments', 'reimbursement']
+            'phone','address1','address2','city','zip_code', 'comments', 'reimbursement', 'delivery_status']
     
     def get_comments(self, obj):
         queryset = Comment.objects.filter(request=obj)
@@ -58,14 +59,20 @@ class VolunteerDetailSerializer(serializers.ModelSerializer):
         try:
             volunteer = Volunteer.objects.get(request=obj)
             reimbursement = Reimbursement.objects.get(volunteer=volunteer)
-            return { "reimbursement_supporter":reimbursement.volunteer.supporter.display_name, 
-            "reimbursement_supporter_id": reimbursement.volunteer.supporter.id, 
-            "reimbursement_status": reimbursement.status, 
-            "reimbursement_amount": reimbursement.amount,
-            "reimbursement_id": reimbursement.id}
+            return ReimbursementSerializer(reimbursement).data
         except:
             return None
-    
+
+    def get_delivery_status(self, obj):
+        try:
+            volunteer = Volunteer.objects.get(request=obj)
+            if volunteer.status == 'Delivered':
+                return volunteer.status
+            else:
+                return 'On the way'
+        except:
+            return None
+
     
 
 class VolunteerListSerializer(serializers.ModelSerializer):
