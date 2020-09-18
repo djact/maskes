@@ -22,20 +22,19 @@ class DonationViewSet(ModelViewSet):
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        print("[UPDATED_DATE BEFORE]",instance.updated_date)
         instance.updated_date = timezone.now()
         instance.save()
-        print("[UPDATED_DATE AFTER]",instance.updated_date)
 
 
 class ListDonationForSignleRequest(ListAPIView):
     serializer_class = DonationListSerializer
     permission_classes = [AllowAny, ]
 
-    def get_queryset(self, uid):
+    def get_queryset(self, *args, **kwargs):
         try:
-            reimbursement = Reimbursement.objects.get(id=uid)
-            return Donation.objects.filter(reimbursement=reimbursement).order_by('-created_date')
+            request=Request.objects.get(id=self.kwargs.get('uid'))
+            donation = Donation.objects.filter(request=request).order_by('-created_date')
+            return donation
         except:
             return None
     
