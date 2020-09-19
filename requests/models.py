@@ -46,6 +46,7 @@ class Volunteer(models.Model):
     status = models.CharField(choices=VOLUNTEERING_STATUS_CHOICES, max_length=150, default=None)
     created_date = models.DateTimeField(default=timezone.now)
     admin_notes = models.TextField(blank=True, null=True, max_length=1024)
+    skip_reimbursement = models.BooleanField(default=False)
 
     def __str__(self):
         return "Support #{}".format(self.id)

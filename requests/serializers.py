@@ -101,7 +101,7 @@ class VolunteeringDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Volunteer
-        fields = ['id','supporter','status','request','request_detail', 'reimbursement_detail', 'created_date']
+        fields = ['id','supporter','status','request','request_detail', 'reimbursement_detail', 'created_date', 'skip_reimbursement']
     
     def get_request_detail(self, obj):
         request_detail = VolunteerDetailSerializer(obj.request).data
