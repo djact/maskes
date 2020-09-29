@@ -4,6 +4,6 @@ python:
 install:
   - pip install -r requirements.txt
 env:
-  - SECRET_KEY=totalllyfake DEBUG=0
+  - SECRET_KEY=totalllyfake DEBUG=0 EMAIL_BACKEND=django.core.mail.backends.dummy.EmailBackend PUBLIC_URL=https://skcema.org/
 script:
   - python manage.py test
