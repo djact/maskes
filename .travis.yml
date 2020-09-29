@@ -4,7 +4,6 @@ python:
 install:
   - pip install -r requirements.txt
 env:
-  - SECRET_KEY=totalllyfake
-  - DEBUG=0
+  - SECRET_KEY=totalllyfake DEBUG=0
 script:
   - python manage.py test
