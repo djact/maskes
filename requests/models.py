@@ -7,13 +7,13 @@ User = get_user_model()
 
 class Request(models.Model):
     requester = models.ForeignKey(User, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=25)
-    address1 = models.CharField("Address 1",max_length=1024)
-    address2 = models.CharField("Address 2",max_length=1024, blank=True)
-    city = models.CharField("City", max_length=255)
-    zip_code = models.CharField("ZIP / Postal code",max_length=12)
-    locations = models.CharField("Location",choices=CITY_CHOICES,max_length=1024)
-    contact_preference = models.CharField(choices=CONTACT_CHOICES, max_length=150)
+    phone = models.CharField(max_length=20)
+    address1 = models.CharField("Address 1",max_length=100)
+    address2 = models.CharField("Address 2",max_length=25, blank=True)
+    city = models.CharField("City", max_length=35)
+    zip_code = models.CharField("ZIP / Postal code",max_length=15)
+    locations = models.CharField("Location",choices=CITY_CHOICES,max_length=35)
+    contact_preference = models.CharField(choices=CONTACT_CHOICES, max_length=100)
     agree_transfer = models.BooleanField(choices=AGREE_TRANSFER_CHOICES),
     #accept a list of items
     prefered_food = models.TextField(max_length=1024)
