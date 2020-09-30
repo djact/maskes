@@ -4,8 +4,8 @@ URGENCY_CHOICES = (
     ("Useful if available", "Useful if avaiable")
 )
 CONTACT_CHOICES = (
-    ("Phone Number - Call","Phone Number - Call"),
-    ("Phone Number - Text", "Phone Number - Text"),
+    ("Call","Phone Number - Call"),
+    ("Text","Phone Number - Text"),
     ("Email", "Email")
 )
 CITY_CHOICES = (
@@ -42,16 +42,16 @@ CITY_CHOICES = (
 )
 
 FOOD_CHOICES = (
-    ("Ingredients to cook with","Ingredients to cook with"),
-    ("Reheat and serve/frozen","Reheat and serve/frozen"),
-    ("Low Prep (like sandwiches, pasta)","Low Prep (like sandwiches, pasta)"),
-    ("Zero - Prep","Zero - Prep"),
+    ("Ingredients to cook with","Cook"),
+    ("Reheat and serve/frozen","Reheat"),
+    ("Low Prep (like sandwiches, pasta)","Low-Prep"),
+    ("Zero - Prep","Instant"),
 )
 
 FINANCIAL_SUPPORT_CHOICES = (
-    ("Pay with your own money and donate to support your community members", "Pay with your own money and donate to support your community members"),
-    ("Pay with your own money (coordinate with delivery person)", "Pay with your own money (coordinate with delivery person)"),
-    ("Request support with your delivery items", "Request support with your delivery items"),
+    ("Self-Pay and Donate", "Pay with your own money and donate to support your community members"),
+    ("Self-Pay", "Pay with your own money (coordinate with delivery person)"),
+    ("Request Support", "Request support with your delivery items"),
 )
 SHARE_INFO_CHOICES = (
     (True,"Yes"),
@@ -59,9 +59,9 @@ SHARE_INFO_CHOICES = (
 )
 
 NEED_CHECKIN_CHOICES = (
-    ("Yes, by text","Yes, by text"),
-    ("Yes, by phone","Yes, by phone"),
-    ("No, thank you","No, thank you"),
+    ("Text","Yes, by text"),
+    ("Phone","Yes, by phone"),
+    ("No","No, thank you"),
 )
 MAPOD_SETUP_CHOICES = (
     (True,"Yes"),
