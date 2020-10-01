@@ -31,12 +31,7 @@ class ListDonationForSignleRequest(ListAPIView):
     permission_classes = [AllowAny, ]
 
     def get_queryset(self, *args, **kwargs):
-        try:
-            request=Request.objects.get(id=self.kwargs.get('uid'))
-            donation = Donation.objects.filter(request=request).order_by('-created_date')
-            return donation
-        except:
-            return None
+        return Donation.objects.filter(request_id=self.kwargs.get('uid'))
     
     def list(self, request, uid):
         queryset = self.get_queryset(uid)

@@ -86,8 +86,13 @@ VOLUNTEER_STATUS_CHOICES = (
     ('Unavailable', 'Unavailable')
 )
 
+VOLUNTEERING_STATUS_SIGNED_UP = 'Signed Up'
+VOLUNTEERING_STATUS_READY = 'Ready'
+VOLUNTEERING_STATUS_DELIVERED = 'Delivered'
+VOLUNTEERING_STATUS_OTW = 'On the way'
+
 VOLUNTEERING_STATUS_CHOICES = (
-    ('Signed Up', 'Signed Up'),
-    ('Ready', 'Ready'),
-    ('Delivered', 'Delivered')
+    (VOLUNTEERING_STATUS_SIGNED_UP, 'Signed Up'),
+    (VOLUNTEERING_STATUS_READY, 'Ready'),
+    (VOLUNTEERING_STATUS_DELIVERED, 'Delivered')
 )
