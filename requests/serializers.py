@@ -53,8 +53,11 @@ class VolunteerDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Request
-        fields = ['id','requester', 'locations', 'household_number', 'urgency', 'items_list', 'food_restrictions', 'volunteer_status', 'created_date',
-            'phone','address1','address2','city','zip_code', 'comments', 'reimbursement', 'delivery_status']
+        fields = ['id','requester', 'locations', 
+            'household_number', 'urgency', 'items_list', 
+            'food_restrictions', 'volunteer_status', 'created_date',
+            'phone','address1','address2','city','zip_code', 
+            'comments', 'reimbursement', 'delivery_status']
     
     def get_comments(self, obj):
         queryset = Comment.objects.filter(request=obj)
@@ -62,17 +65,20 @@ class VolunteerDetailSerializer(serializers.ModelSerializer):
         return [{comment['id']:comment['comment_content']} for comment in comments]
 
     def get_reimbursement(self, obj):
-        if Volunteer.objects.filter(request=obj).exists():
-            volunteer = Volunteer.objects.get(request=obj)
-            reimbursement = Reimbursement.objects.get(volunteer=volunteer)
+        try:
+            reimbursement = Reimbursement.objects.get(volunteer=obj.volunteer)
             return ReimbursementSerializer(reimbursement).data
-        else:
-            return None
+        except (
+            Reimbursement.DoesNotExist, 
+            Request.volunteer.RelatedObjectDoesNotExist
+        ): return None
 
     def get_delivery_status(self, obj):
         if Volunteer.objects.filter(request=obj).exists():
             volunteer = Volunteer.objects.get(request=obj)
-            return volunteer.status if volunteer.status == VOLUNTEERING_STATUS_DELIVERED else VOLUNTEERING_STATUS_OTW
+            return volunteer.status if(
+                 volunteer.status == VOLUNTEERING_STATUS_DELIVERED
+                 ) else VOLUNTEERING_STATUS_OTW
         else: 
             return None
     
@@ -92,7 +98,9 @@ class VolunteerListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Request
-        fields = ['id','locations', 'household_number', 'urgency', 'items_list', 'volunteer_status', 'created_date', 'supporter']
+        fields = ['id','locations', 'household_number', 
+            'urgency', 'items_list', 'volunteer_status', 
+            'created_date', 'supporter']
 
 
 class VolunteeringDetailSerializer(serializers.ModelSerializer):
@@ -102,7 +110,9 @@ class VolunteeringDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Volunteer
-        fields = ['id','supporter','status','request','request_detail', 'reimbursement_detail', 'created_date', 'skip_reimbursement']
+        fields = ['id','supporter','status','request',
+            'request_detail', 'reimbursement_detail', 
+            'created_date', 'skip_reimbursement']
     
     def get_request_detail(self, obj):
         request_detail = VolunteerDetailSerializer(obj.request).data
