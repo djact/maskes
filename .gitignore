@@ -1,5 +1,4 @@
 env/
-build/
 .env
 generate_faker.py
 fake_list.py
