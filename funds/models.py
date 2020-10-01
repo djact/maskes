@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from PIL import Image
-from requests.models import Volunteer
+from requests.models import Volunteer, Request
 
 User = get_user_model()
 
@@ -28,7 +28,7 @@ class Reimbursement(models.Model):
 
 class Donation(models.Model):
     donator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name = "Donator")
-    reimbursement = models.ForeignKey(Reimbursement, on_delete=models.CASCADE, verbose_name = "Reimbursement ID")
+    request = models.ForeignKey(Request, on_delete=models.CASCADE, verbose_name = "Request ID")
     amount = amount = models.DecimalField(max_digits=5, decimal_places=2)
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(default=timezone.now)
