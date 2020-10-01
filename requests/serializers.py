@@ -1,4 +1,10 @@
 from rest_framework import serializers
+from .request_form_choices import (
+    VOLUNTEERING_STATUS_SIGNED_UP, 
+    VOLUNTEERING_STATUS_READY, 
+    VOLUNTEERING_STATUS_DELIVERED,REQUEST_STATUS_CHOICES,
+    VOLUNTEERING_STATUS_OTW)
+    
 from .models import Request, Volunteer
 from django.contrib.auth import get_user_model
 from funds.serializers import ReimbursementSerializer
@@ -6,7 +12,7 @@ from funds.models import Reimbursement
 from connect.models import Comment, Reply
 from connect.serializers import CommentDetailSerializer, CommentListSerializer
 User = get_user_model()
-
+ 
 class RequesterDetailSerializer(serializers.ModelSerializer):
     requester = serializers.HyperlinkedRelatedField(
         view_name='users:useraccount-detail',
@@ -56,38 +62,33 @@ class VolunteerDetailSerializer(serializers.ModelSerializer):
         return [{comment['id']:comment['comment_content']} for comment in comments]
 
     def get_reimbursement(self, obj):
-        try:
+        if Volunteer.objects.filter(request=obj).exists():
             volunteer = Volunteer.objects.get(request=obj)
             reimbursement = Reimbursement.objects.get(volunteer=volunteer)
             return ReimbursementSerializer(reimbursement).data
-        except:
+        else:
             return None
 
     def get_delivery_status(self, obj):
-        try:
+        if Volunteer.objects.filter(request=obj).exists():
             volunteer = Volunteer.objects.get(request=obj)
-            if volunteer.status == 'Delivered':
-                return volunteer.status
-            else:
-                return 'On the way'
-        except:
+            return volunteer.status if volunteer.status == VOLUNTEERING_STATUS_DELIVERED else VOLUNTEERING_STATUS_OTW
+        else: 
             return None
-
     
 
 class VolunteerListSerializer(serializers.ModelSerializer):
     supporter = serializers.SerializerMethodField(read_only=True)
 
     def get_supporter(self, obj):
-        try:
+        if Volunteer.objects.filter(request=obj).exists():
             volunteer = Volunteer.objects.get(request=obj)
             return {
                 "display_name": volunteer.supporter.display_name,
                 "id": volunteer.supporter.id,
             }
-        except: 
+        else: 
             return None
-
 
     class Meta:
         model = Request
@@ -108,11 +109,11 @@ class VolunteeringDetailSerializer(serializers.ModelSerializer):
         return request_detail
     
     def get_reimbursement_detail(self, obj):
-        try:
-            queryset = Reimbursement.objects.get(volunteer=obj)
-            reimbursement_detail = ReimbursementSerializer(queryset).data 
+        if Reimbursement.objects.filter(volunteer=obj).exists():
+            reimbursement = Reimbursement.objects.get(volunteer=obj)
+            reimbursement_detail = ReimbursementSerializer(reimbursement).data 
             return reimbursement_detail
-        except:
+        else:
             return None
     
 class VolunteeringListSerializer(serializers.ModelSerializer):
