@@ -14,8 +14,7 @@ class Request(models.Model):
     zip_code = models.CharField("ZIP / Postal code",max_length=15)
     locations = models.CharField("Location",choices=CITY_CHOICES,max_length=35)
     contact_preference = models.CharField(choices=CONTACT_CHOICES, max_length=100)
-    agree_transfer = models.BooleanField(choices=AGREE_TRANSFER_CHOICES),
-    #accept a list of items
+    agree_transfer = models.BooleanField(choices=AGREE_TRANSFER_CHOICES)
     prefered_food = models.TextField(max_length=1024)
     items_list = models.TextField(max_length=2048)
     food_restrictions = models.TextField(default=None, blank=True, max_length=1024)
