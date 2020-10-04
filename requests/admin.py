@@ -40,10 +40,10 @@ class VolunteerAdmin(admin.ModelAdmin):
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
     }
-    list_display = ('id','supporter_account','request_link', 'reimbursement_link', 'status','created_date')
+    list_display = ('id','supporter_account','request_link', 'reimbursement_link', 'status','skip_reimbursement','created_date')
     list_display_links = ('id',)
-    list_filter = ('status',)
-    list_editable = ('status',)
+    list_filter = ('status','skip_reimbursement')
+    list_editable = ('status', 'skip_reimbursement')
     search_fields = ('id','supporter__first_name', 'supporter__last_name', 'request__requester__first_name', 'request__requester__last_name', 'request__id')
     list_per_page = 25
     readonly_fields = ('supporter_account', 'request_link','reimbursement_link','created_date')

@@ -30,7 +30,8 @@ class CommentViewSet(viewsets.ModelViewSet):
         except:
             queryset = Comment.objects.none()
         page = self.paginate_queryset(queryset)
-        serializer = serializers.CommentListSerializer(page, many=True)
+        # pass context for custom view use for absolute uri
+        serializer = serializers.CommentListSerializer(page, many=True, context={'request':self.request})
         return self.get_paginated_response(serializer.data)
 
     

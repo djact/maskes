@@ -10,5 +10,5 @@ app_name = 'funds'
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('donation-list/<uid>/', ListDonationForSignleRequest.as_view(), name='donationlist')
+    path('donation-list/<int:uid>/', ListDonationForSignleRequest.as_view(), name='donationlist')
 ]
