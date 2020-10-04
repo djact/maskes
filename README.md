@@ -15,6 +15,7 @@
   * from the console, run `createdb maskes`
   * next run `createuser -s -P maskes`, it'll prompt you for a password, use `maskes`
   * run `python manage.py migrate`
+5. Add some seed data with `python generate_faker.py`
 5. Runserver
     ```python
         python manage.py runserver
