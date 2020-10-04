@@ -324,11 +324,6 @@ def create_request(N):
             agree_transfer=agree_transfer)
         print('request ',  _+1, ' created!')
 
-# def change_user():
-#     for user in User.objects.all():
-#         user.display_name = user.email.split('@')[0]
-#         user.save()
-
 create_user(100)
 create_request(100)
 # change_user()
