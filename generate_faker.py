@@ -319,7 +319,8 @@ def create_request(N):
             city=city,zip_code=zip_code,contact_preference=contact_preference,
             prefered_food=prefered_food, items_list=items_list,food_restrictions=food_restrictions, household_number=household_number,
             urgency=urgency, financial_support=financial_support, special_info=special_info,share_info=share_info,need_checkin=need_checkin,
-            extra_info=extra_info, ma_pod_setup=ma_pod_setup, offer_resources=offer_resources, created_date=created_date, status=status, last_edit=last_edit)
+            extra_info=extra_info, ma_pod_setup=ma_pod_setup, offer_resources=offer_resources, created_date=created_date, status=status, last_edit=last_edit,
+            agree_transfer=agree_transfer)
 
 # def change_user():
 #     for user in User.objects.all():

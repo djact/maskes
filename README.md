@@ -16,8 +16,10 @@
   * next run `createuser -s -P maskes`, it'll prompt you for a password, use `maskes`
   * run `python manage.py migrate`
 5. Add some seed data with `python generate_faker.py`
-5. Runserver
+6. Add a superuser account for yourself with `python manage.py createsuperuser`
+7. Runserver
     ```python
         python manage.py runserver
     ```
+8. You can then log in to the admin portal with your superuser account at http://localhost:8000/admin/
 :+1:

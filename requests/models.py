@@ -7,7 +7,7 @@ User = get_user_model()
 
 class Request(models.Model):
     requester = models.ForeignKey(User, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=20)
+    phone = models.CharField(max_length=22)
     address1 = models.CharField("Address 1",max_length=100)
     address2 = models.CharField("Address 2",max_length=25, blank=True)
     city = models.CharField("City", max_length=35)
