@@ -24,8 +24,15 @@ class UserAccountManager(BaseUserManager):
         return user
     
     def create_superuser(self, email, first_name, last_name, 
-        is_requester, is_volunteer, password, display_name):
-        user = self.create_user(email, first_name, last_name, is_requester, is_volunteer, password, display_name)
+        password, display_name):
+        user = self.create_user(
+            email=email, 
+            first_name=first_name, 
+            last_name=last_name, 
+            password=password, 
+            display_name=display_name,
+            is_requester = True,
+            is_volunteer = True)
         user.is_superuser = True
         user.is_staff = True
         user.save()
@@ -44,7 +51,7 @@ class UserAccount(AbstractBaseUser,PermissionsMixin):
     objects = UserAccountManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'is_volunteer','is_requester', 'display_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'display_name']
 
     class Meta:
         verbose_name = 'Account'
