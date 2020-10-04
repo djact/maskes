@@ -274,7 +274,7 @@ def create_user(N):
         first_name = fake.first_name()
         last_name = fake.last_name()
         is_volunteer = fake.pybool()
-        is_requester = fake.pybool()
+        is_requester = not is_volunteer
         email = fake.email()
         password = fake.password()
         display_name = "{}{}{}".format(first_name.lower(), last_name[0].lower(), random.choice([str(random.randint(1,99)),""]))
@@ -324,7 +324,7 @@ def create_request(N):
             agree_transfer=agree_transfer)
         print('request ',  _+1, ' created!')
 
-create_user(100)
-create_request(100)
+create_user(10)
+create_request(10)
 # change_user()
 print('Data is populated successfully!!')
