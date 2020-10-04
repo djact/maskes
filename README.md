@@ -23,9 +23,10 @@
         python manage.py createsuperuser
     ```
     
-5. Add some seed data with `python generate_faker.py`
-5. Runserver
+7. Add some seed data with `python generate_faker.py`
+8. Runserver
     ```python
         python manage.py runserver
     ```
+9. 8. You can then log in to the admin portal with your superuser account at http://localhost:8000/admin/
 :+1:
