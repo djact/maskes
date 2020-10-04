@@ -286,12 +286,13 @@ def create_user(N):
             email=email,
             password=password, 
             display_name=display_name)
+        print('user ', _+1, ' created!')
 
 def create_request(N):
     fake = Faker()
     for _ in range(N):
         requester = random.choice(User.objects.filter(is_requester=True))
-        phone = fake.phone_number()
+        phone = fake.phone_number()[:12]
         locations=random.choice(LOCATIONS)
         address1 = fake.address().split('\n')[0]
         address2 = fake.secondary_address()
@@ -311,7 +312,7 @@ def create_request(N):
         extra_info = fake.text()
         ma_pod_setup = random.choice(MAPOD_SETUP_CHOICES)[0]
         offer_resources = fake.text()
-        created_date = fake.date_time()
+        created_date = timezone.make_aware(fake.date_time())
         status = random.choice(REQUEST_STATUS_CHOICES)[0]
         last_edit = "{}-{} by {} ".format(fake.month(),fake.day_of_month(),fake.first_name())
         locations = random.choice(LOCATIONS)
@@ -319,7 +320,9 @@ def create_request(N):
             city=city,zip_code=zip_code,contact_preference=contact_preference,
             prefered_food=prefered_food, items_list=items_list,food_restrictions=food_restrictions, household_number=household_number,
             urgency=urgency, financial_support=financial_support, special_info=special_info,share_info=share_info,need_checkin=need_checkin,
-            extra_info=extra_info, ma_pod_setup=ma_pod_setup, offer_resources=offer_resources, created_date=created_date, status=status, last_edit=last_edit)
+            extra_info=extra_info, ma_pod_setup=ma_pod_setup, offer_resources=offer_resources, created_date=created_date, status=status, last_edit=last_edit,
+            agree_transfer=agree_transfer)
+        print('request ',  _+1, ' created!')
 
 # def change_user():
 #     for user in User.objects.all():
