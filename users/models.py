@@ -8,7 +8,7 @@ from django.contrib.auth.models import (AbstractBaseUser,
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, 
-        is_requester, is_volunteer, password=None, display_name=None):
+        password=None, display_name=None, is_requester=False, is_volunteer=False):
         if not email:
             raise ValueError("user must have an email address")
         email = self.normalize_email(email)
@@ -17,8 +17,8 @@ class UserAccountManager(BaseUserManager):
             first_name=first_name, 
             last_name=last_name,
             display_name=display_name,
-            is_requester=is_requester,
-            is_volunteer=is_volunteer) #create a new model object
+            is_volunteer=is_volunteer,
+            is_requester=is_requester) 
         user.set_password(password)
         user.save()
         return user
