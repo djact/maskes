@@ -1,9 +1,10 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 from .models import UserProfile
 from django.contrib.auth import get_user_model
 from requests.models import Volunteer
-
+from djoser.conf import settings as djoser_settings
 User = get_user_model()
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -37,5 +38,17 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = "__all__"
         lookup_field = "user_id"
 
+class CustomUserCreateSerializer(UserCreateSerializer):
+
+    class Meta:
+        model = User
+        fields = tuple(User.REQUIRED_FIELDS) + (
+            djoser_settings.LOGIN_FIELD,
+            User._meta.pk.name,
+            "password",
+            "is_requester",
+            "is_volunteer",
+        )
+    
 class EmptySerializer(serializers.Serializer):
     pass

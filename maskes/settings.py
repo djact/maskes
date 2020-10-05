@@ -186,7 +186,9 @@ DJOSER = {
     'USERNAME_RESET_CONFIRM_RETYPE': True,
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': False,
-    'SERIALIZERS': {},
+    'SERIALIZERS': {
+        'user_create': 'users.serializers.CustomUserCreateSerializer',
+    },
     'HIDE_USERS': True,
 }
 
