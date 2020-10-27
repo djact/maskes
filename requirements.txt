@@ -1,6 +1,8 @@
 appnope==0.1.0
 asgiref==3.2.10
 backcall==0.2.0
+boto3==1.16.3
+botocore==1.19.3
 certifi==2020.6.20
 chardet==3.0.4
 decorator==4.4.2
@@ -28,6 +30,7 @@ django-rest-auth==0.9.5
 django-sekizai==1.1.0
 django-select2==7.4.2
 django-shop==1.2.2
+django-storages==1.10.1
 django-templated-mail==1.1.1
 django-treebeard==4.3.1
 djangocms-admin-style==1.5.0
@@ -45,6 +48,7 @@ install==1.3.3
 ipython==7.16.1
 ipython-genutils==0.2.0
 jedi==0.17.1
+jmespath==0.10.0
 jsonfield==3.1.0
 oauth2client==4.1.3
 parso==0.7.0
@@ -52,16 +56,19 @@ pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==7.1.2
 prompt-toolkit==3.0.5
+psycopg2==2.8.6
 ptyprocess==0.6.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-psycopg2==2.8.6
+pydot==1.4.1
 Pygments==2.6.1
 PyJWT==1.7.1
+pyparsing==2.4.7
 python-dateutil==2.8.1
 pytz==2020.1
 requests==2.24.0
 rsa==4.6
+s3transfer==0.3.3
 six==1.15.0
 sqlparse==0.3.1
 text-unidecode==1.3
