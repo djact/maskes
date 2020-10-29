@@ -15,13 +15,13 @@ class Reimbursement(models.Model):
     volunteer_notes = models.TextField(blank=True, null=True, max_length=1024)
     created_date = models.DateTimeField(default=timezone.now)
     
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #     img = Image.open(self.receipt_photo.path)       
-    #     if img.height > 500 or img.width > 500:
-    #         output_size = (500, 500)
-    #         img.thumbnail(output_size)
-    #         img.save(self.receipt_photo.path, quality=75)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.receipt_photo.path)       
+        if img.height > 500 or img.width > 500:
+            output_size = (500, 500)
+            img.thumbnail(output_size)
+            img.save(self.receipt_photo.path, quality=75)
     
     def __str__(self):
         return '{} - {} - ${}'.format(self.id, self.volunteer.supporter.display_name, self.amount);
