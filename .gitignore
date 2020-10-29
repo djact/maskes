@@ -9,3 +9,5 @@ profile_pics/
 receipt_photos
 local_settings.py
 mysettings.py
+build/*
+!build/index.html
