@@ -287,3 +287,8 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False
 }
+
+try:
+  from local_settings import *
+except ImportError:
+  pass
