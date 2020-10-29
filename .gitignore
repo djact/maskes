@@ -11,3 +11,4 @@ local_settings.py
 mysettings.py
 build/*
 !build/index.html
+static/
