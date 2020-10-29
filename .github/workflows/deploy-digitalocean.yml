@@ -18,13 +18,13 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Run Tests
-        run: |
-          python manage.py test
+      # - name: Install Dependencies
+        # run: |
+        #   python -m pip install --upgrade pip
+        #   pip install -r requirements.txt
+      # - name: Run Tests
+        # run: |
+        #   python manage.py test
       - name: Executing remote command
         uses: appleboy/ssh-action@master
         with:
@@ -39,6 +39,7 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
             python manage.py migrate
-            python manage.py collectstatic
+            python manage.py collectstatic --noinput
+            sudo chmod -R 755 static
 
 
