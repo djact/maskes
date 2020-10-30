@@ -23,8 +23,12 @@ admin.site.site_header = "MASKES Admin"
 admin.site.site_title = "MASKES Admin Portal"
 admin.site.index_title = "Welcome to Mutual Aid South King County & East Side Portal"
 
+INDEX = 'index.html'
+if settings.DEBUG:
+    INDEX = 'home.html'
+
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='index.html')),
+    path('', TemplateView.as_view(template_name=INDEX)),
     path('admin/', admin.site.urls),
     path('', include('users.urls', namespace='user')),
     # path('', include('djoser.urls')),
@@ -38,4 +42,4 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
+urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name=INDEX))]
