@@ -5,12 +5,12 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 class ReimbursementAdmin(admin.ModelAdmin):
-    list_display = ('id','volunteer', 'request', 'supporter', 'total_cost', 'amount', 'status','created_date')
+    list_display = ('id','volunteer_link', 'request', 'supporter', 'total_cost', 'amount', 'status','created_date')
     list_display_links = ('id',)
     list_filter = ('status',)
     list_editable = ('status',)
     search_fields = ('id','volunteer__id',)
-    readonly_fields = ('request','created_date', 'supporter','supporter_venmo')
+    readonly_fields = ('request','created_date', 'supporter','volunteer_link','supporter_venmo')
     list_per_page = 25
 
     def request(self, obj):
@@ -33,6 +33,13 @@ class ReimbursementAdmin(admin.ModelAdmin):
             obj.volunteer.supporter.userprofile.venmo,
         ))
     supporter_venmo.short_description = 'Supporter Venmo'
+
+    def volunteer_link(self, obj):
+        return mark_safe('<a href="{}">{}</a>'.format(
+            reverse('admin:%s_%s_change' % (obj.volunteer._meta.app_label,  obj.volunteer._meta.model_name),  args=[obj.volunteer.id] ),
+            obj.volunteer
+        ))
+    volunteer_link.short_description = 'Support Info'
 
     
 admin.site.register(Reimbursement, ReimbursementAdmin);
