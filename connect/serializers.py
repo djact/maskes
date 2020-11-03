@@ -22,9 +22,10 @@ class ReplyListSerializer(serializers.ModelSerializer):
     def get_author_name(self, obj):
         user = User.objects.get(id=obj.author.id)
         return user.display_name
-
+    
 class ReplyDetailSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField(read_only=True)
+    author_image = serializers.SerializerMethodField(source='get_absolute_url')
 
     class Meta:
         model = Reply
@@ -33,6 +34,10 @@ class ReplyDetailSerializer(serializers.ModelSerializer):
     def get_author_name(self, obj):
         user = User.objects.get(id=obj.author.id)
         return user.display_name
+    
+    def get_author_image(self, obj):
+        # use context build_absolute_uri on custom view_replies
+        return self.context.get('request').build_absolute_uri(obj.author.userprofile.image.url)
 
 class CommentListSerializer(serializers.ModelSerializer):
     reply_count = serializers.SerializerMethodField()
