@@ -43,7 +43,6 @@ class CommentListSerializer(serializers.ModelSerializer):
     reply_count = serializers.SerializerMethodField()
     author_name = serializers.SerializerMethodField(read_only=True)
     author_image = serializers.SerializerMethodField(source='get_absolute_url')
-    replies = ReplyListSerializer(many=True, read_only=True)
 
     class Meta:
         model = Comment
@@ -60,24 +59,12 @@ class CommentListSerializer(serializers.ModelSerializer):
     def get_author_image(self, obj):
         # use context build_absolute_uri on custom view_comments
         return self.context.get('request').build_absolute_uri(obj.author.userprofile.image.url)
-        
-    
-    def get_replies(self, obj):
-        queryset = Reply.objects.filter(comment=obj)
-        replies = ReplyListSerializer(queryset, many=True).data
-        return replies
 
 class CommentDetailSerializer(serializers.ModelSerializer):
-    replies = ReplyListSerializer(many=True, read_only=True)
-
     class Meta:
         model = Comment
-        fields = ['id','request','comment_content', 'author', 'replies']
-    
-    def get_replies(self, obj):
-        queryset = Reply.objects.filter(comment=obj)
-        replies = ReplyListSerializer(queryset, many=True).data
-        return replies
+        fields = ['id','request','comment_content', 'author']
+
 
 
 class EmptySerializer(serializers.Serializer):
