@@ -8,7 +8,20 @@
         source env/bin/activate
         pip install -r requirements.txt
     ```
-3. Ask Duc or one of the other developers for the `.env` file and place it in the root of the project
+3. optional: using your email to send email, create local_settings.py next to settings.py:
+    <font size="1" style="color:gray">-> make sure local_settings.py is in .gitingore</font>
+    ```python
+        SECRET_KEY = 'yoursecretkey' # eg:n!+$0%qf#$ldt7t5^7@a*%jo7s)yxe468av72z#hq)bx^+qu9d
+        DEBUG = True
+        EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+        EMAIL_HOST = '<your-email-host>' 
+        EMAIL_PORT = '<email-port>' # eg: 587
+        EMAIL_HOST_USER = 'youremail@example.com'
+        EMAIL_HOST_PASSWORD = 'your-password' #not support 2-Step Verification
+        EMAIL_USE_TLS = True
+    ```
+    *<font size="1">Set Google App Passwords info: https://support.google.com/accounts/answer/185833?hl=en</font>*
+    
 4. Setup database
     * Make sure you have modern version of Postgresql installed locally
     * from the console, run `createdb maskes`
