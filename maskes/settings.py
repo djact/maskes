@@ -280,10 +280,10 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_flat_style": False
 }
 
+# Activate Django-Heroku.
+django_heroku.settings(locals())
+
 try:
   from .local_settings import *
 except ImportError:
   pass
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
