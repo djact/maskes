@@ -59,7 +59,7 @@ class VolunteerViewSet(ReadOnlyModelViewSet):
                 if household_number >= 8:
                     queryset = queryset.filter(household_number__gte=household_number)
                 else:
-                    queryset = queryset.filter(household_number__iexact=household_number)
+                    queryset = queryset.filter(household_number=household_number)
         except:
             pass
         
