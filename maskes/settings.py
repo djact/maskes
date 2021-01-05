@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'djoser',
     'users.apps.UsersConfig',
     'requests.apps.RequestsConfig',
+    'offers.apps.OffersConfig',
     'funds.apps.FundsConfig',
     'connect.apps.ConnectConfig',
     'templated_mail',
