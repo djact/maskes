@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.dispatch import receiver
 from .models import UserProfile, UserAddress
 from requests.models import Request
+from offers.models import Offer
 
 User = get_user_model()
 
@@ -15,6 +16,13 @@ def create_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
     instance.userprofile.save()
+
+# @receiver(post_save, sender=User)
+# def create_offer(sender, instance, created, **kwargs):
+#     i = instance
+#     if created and instance:
+#         print(i)
+#         Offer.objects.create()
 
 
 @receiver(post_save, sender=Request)
