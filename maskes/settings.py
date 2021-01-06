@@ -47,9 +47,11 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'requests.apps.RequestsConfig',
     'offers.apps.OffersConfig',
+    'events.apps.EventsConfig',
     'funds.apps.FundsConfig',
     'connect.apps.ConnectConfig',
     'templated_mail',
+    'ckeditor',   
 ]
 
 MIDDLEWARE = [
@@ -280,6 +282,16 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False
 }
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full'
+    },
+}
+
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
