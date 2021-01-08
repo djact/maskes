@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
-from .serializers import CustomTokenObtainPairSerializer, ProfileSerializer
+from .serializers import CustomTokenObtainPairSerializer, ProfileSerializer, ProfilePhotoSerializer
 
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
@@ -88,6 +88,21 @@ class ProfileViewSet(viewsets.ModelViewSet):
             return UserProfile.objects.filter(user=self.request.user)
         else:
             return UserProfile.objects.filter(user__is_volunteer__exact=True).order_by('-created_date')
+
+    @action(detail=True, methods=['POST'])
+    def upload_photo(self, request, *args, **kwargs):
+        user_profile = self.get_object()
+        serializer = ProfilePhotoSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            image = serializer.validated_data['image']
+            user_profile.image = image
+            user_profile.save()
+            uri = self.request.build_absolute_uri(user_profile.image.url)
+            return Response({'message': 'Succesfully Update Profile Photo', 'image': uri}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogoutAndBlacklistRefreshTokenForUserView(APIView):

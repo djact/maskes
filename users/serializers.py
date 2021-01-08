@@ -5,6 +5,7 @@ from .models import UserProfile
 from django.contrib.auth import get_user_model
 from requests.models import Volunteer
 from djoser.conf import settings as djoser_settings
+from rest_framework.parsers import MultiPartParser, FormParser
 User = get_user_model()
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -49,6 +50,13 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             "is_requester",
             "is_volunteer",
         )
+
+
+class ProfilePhotoSerializer(serializers.ModelSerializer):
+    parser_classes = [MultiPartParser, FormParser]
+    class Meta:
+        model = UserProfile
+        fields = ('image',)
     
 class EmptySerializer(serializers.Serializer):
     pass
