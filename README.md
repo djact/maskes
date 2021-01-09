@@ -1,17 +1,57 @@
 # Installation
-1. Create venv
-    ```python
+1. Database Setup 
+    * Install latest PostgreSQL:
+        ```
+        MacOSX: https://www.postgresql.org/download/macosx/
+        EDB: https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+    * export ph_config path:
+        ```
+        ### for macOSX postgresql v13.1 using EDB installer ###
+        $ export PATH="/Library/PostgreSQL/13/bin:$PATH"
+    * from the console, run 
+        ```
+        createdb -U postgres maskes
+        createuser -U postgres -s -P maskes
+        ```
+        it'll prompt you for a password for new role, use `maskes`
+2. Clone Project:    
+    ```
+    git clone https://github.com/djact/maskes.git
+    ```
+3. Python Setup:
+    * Download/Install Python
+        ```
+        https://www.python.org/downloads/
+    * Create/Activate python virtual environment
+        ```
         python3 -m venv env
-    ```
-2. Install packages:
-    ```python
         source env/bin/activate
+    * Install dependencies:
+        ```
         pip install -r requirements.txt
+    * Migration:
+        ```
+        python manage.py migrate 
+    * Create a superuser:
+        ```
+        python manage.py createsuperuser
+        ```
+    * Add some seed data with 
+        ```
+        python generate_faker.py
+        ```
+4. Runserver
     ```
-3. optional: using your email to send email, create local_settings.py next to settings.py:
+        python manage.py runserver
+    ```
+5. You can then log in to the admin portal with your superuser account at 
+    ```
+    http://localhost:8000/admin/
+    ```
+6. Email Setup (optional): using your email to send email, create local_settings.py next to settings.py:
     <font size="1" style="color:gray">-> make sure local_settings.py is in .gitingore</font>
     ```python
-        SECRET_KEY = 'yoursecretkey' # eg:n!+$0%qf#$ldt7t5^7@a*%jo7s)yxe468av72z#hq)bx^+qu9d
+        SECRET_KEY = 'yoursecretkey'
         DEBUG = True
         EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
         EMAIL_HOST = '<your-email-host>' 
@@ -21,26 +61,5 @@
         EMAIL_USE_TLS = True
     ```
     *<font size="1">Set Google App Passwords info: https://support.google.com/accounts/answer/185833?hl=en</font>*
-    
-4. Setup database
-    * Make sure you have modern version of Postgresql installed locally
-    * from the console, run `createdb maskes`
-    * next run `createuser -s -P maskes`    
-    it'll prompt you for a password, use `maskes`
-5. To migrate, run:
-    ```python
-        python manage.py migrate
-    ```
-6. Create a superuser:
-    ```python
-        python manage.py createsuperuser
-    ```
-    
-7. Add some seed data with `python generate_faker.py`
-8. Runserver
-    ```python
-        python manage.py runserver
-    ```
-9. You can then log in to the admin portal with your superuser account at http://localhost:8000/admin/
-
+      
 :+1:
