@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('requests', '0010_volunteer_skip_reimbursement'),
+        ('supports', '0010_volunteer_skip_reimbursement'),
     ]
 
     operations = [

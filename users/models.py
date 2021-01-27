@@ -1,7 +1,7 @@
 from django.db import models
 from PIL import Image
 from django.utils import timezone
-from requests.request_form_choices import CITY_CHOICES
+from supports.request_form_choices import CITY_CHOICES
 from django.contrib.auth.models import (AbstractBaseUser, 
                                         PermissionsMixin, 
                                         BaseUserManager)

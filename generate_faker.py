@@ -5,9 +5,9 @@ django.setup()
 
 from faker import Faker
 from django.contrib.auth import get_user_model
-from requests.models import Request
+from supports.models import Request
 from django.utils import timezone
-from requests.request_form_choices import *
+from supports.request_form_choices import *
 
 GROCERY_LIST = ["Whole milk, fruit (strawberries and bananas), fruit roll ups, Minute Maid jug , orange juice , jumbolia mix, muffins, bread, noodles, Mac & cheese, caprisuns, juice boxes, pull ups 3T-4T",
 "2 containers whole milk, 1 loaf white bread, 2 dozzen eggs, snacks for 8 year old (must be peanut free, fruit snacks, crackers, boxed juice, etc).",

@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from .permissions import IsOwnerOrReadOnly
 from .models import Comment, Reply
-from requests.models import Request
+from supports.models import Request
 from . import serializers
 
 class CommentViewSet(viewsets.ModelViewSet):

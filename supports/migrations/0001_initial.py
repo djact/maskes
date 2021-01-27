@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('status', models.CharField(choices=[('Signed Up', 'Signed Up'), ('Delivered', 'Delivered')], default=None, max_length=150)),
                 ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('request', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='requests.Request')),
+                ('request', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='supports.Request')),
             ],
         ),
     ]

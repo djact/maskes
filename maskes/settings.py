@@ -44,8 +44,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'djoser',
+    'django_rename_app',
     'users.apps.UsersConfig',
-    'requests.apps.RequestsConfig',
+    'supports.apps.SupportsConfig',
     'offers.apps.OffersConfig',
     'events.apps.EventsConfig',
     'funds.apps.FundsConfig',
@@ -231,7 +232,7 @@ JAZZMIN_SETTINGS = {
         {'model': 'users.UserAccount'},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
-        {'app': 'requests'},
+        {'app': 'supports'},
     ],
 
     'usermenu_links': [
@@ -243,7 +244,7 @@ JAZZMIN_SETTINGS = {
 
     'show_sidebar': True,
 
-    'order_with_respect_to': ['requests', 'funds', 'users', 'connect'],
+    'order_with_respect_to': ['supports', 'funds', 'users', 'connect'],
 
     # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
     'icons': {
@@ -252,8 +253,8 @@ JAZZMIN_SETTINGS = {
         'users.UserAddress': 'fas fa-map-marked',
         'users.UserProfile': 'fas fa-address-card',
         'auth.Group': 'fas fa-users',
-        'requests.Request': 'fas fa-mail-bulk',
-        'requests.Volunteer': 'fas fa-project-diagram',
+        'supports.Request': 'fas fa-mail-bulk',
+        'supports.Volunteer': 'fas fa-project-diagram',
         'funds.Reimbursement': 'fas fa-comment-dollar',
         'funds.Donation': 'fas fa-dollar-sign',
         'connect.Comment': 'fas fa-comments',

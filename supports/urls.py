@@ -8,7 +8,7 @@ router.register(r'volunteer', VolunteerViewSet, basename='volunteer')
 router.register(r'volunteering', VolunteeringViewSet, basename='volunteering')
 
 
-app_name = 'requests'
+app_name = 'supports'
 
 urlpatterns = [
     path('', include(router.urls)),

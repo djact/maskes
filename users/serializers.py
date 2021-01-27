@@ -3,7 +3,7 @@ from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 from .models import UserProfile
 from django.contrib.auth import get_user_model
-from requests.models import Volunteer
+from supports.models import Volunteer
 from djoser.conf import settings as djoser_settings
 from rest_framework.parsers import MultiPartParser, FormParser
 User = get_user_model()

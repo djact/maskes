@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from requests.models import Request
+from supports.models import Request
 from .models import Comment, Reply
 
 from django.contrib.auth import get_user_model

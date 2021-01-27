@@ -34,7 +34,7 @@ urlpatterns = [
     # path('', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('requests/', include('requests.urls', namespace='request')),
+    path('requests/', include('supports.urls', namespace='request')),
     path('funds/', include('funds.urls', namespace='fund')),
     path('connect/', include('connect.urls', namespace='connection')),
     path('events/',include('events.urls'))

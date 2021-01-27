@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('requests', '0003_auto_20200731_0439'),
+        ('supports', '0003_auto_20200731_0439'),
     ]
 
     operations = [
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('is_approved', models.BooleanField(default=True, verbose_name='Approved')),
                 ('author', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ('request', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='requests.Request')),
+                ('request', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='supports.Request')),
             ],
             options={
                 'ordering': ['-created_date'],

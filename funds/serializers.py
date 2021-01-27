@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.parsers import MultiPartParser, FormParser
-from requests.models import Request, Volunteer
+from supports.models import Request, Volunteer
 from .models import Reimbursement, Donation
 from django.contrib.auth import get_user_model
 User = get_user_model()

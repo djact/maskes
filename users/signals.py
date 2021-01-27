@@ -2,7 +2,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
 from .models import UserProfile, UserAddress
-from requests.models import Request
+from supports.models import Request
 from offers.models import Offer
 
 User = get_user_model()

@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('requests', '0004_request_admin_notes'),
+        ('supports', '0004_request_admin_notes'),
         ('connect', '0001_initial'),
     ]
 
@@ -20,6 +20,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='comment',
             name='request',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='requests.Request', verbose_name='Request'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='supports.Request', verbose_name='Request'),
         ),
     ]

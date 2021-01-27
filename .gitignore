@@ -11,3 +11,4 @@ local_settings.py
 build/*
 !build/home.html
 static/
+note.txt
