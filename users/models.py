@@ -88,11 +88,11 @@ class UserProfile(models.Model):
     venmo = models.CharField(max_length=25, blank=True)
     location = models.CharField(max_length=255, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
-
     fullname_privacy = models.BooleanField(default=True)
     email_privacy = models.BooleanField(default=True)
     phone_privacy = models.BooleanField(default=True)
     location_privacy = models.BooleanField(default=True)
+    stripe = models.CharField(max_length=25, blank=True, null=True)
 
 
     class Meta:
