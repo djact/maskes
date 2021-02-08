@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'funds.apps.FundsConfig',
     'connect.apps.ConnectConfig',
+    'faq.apps.FaqConfig',
     'templated_mail',
     'ckeditor',   
 ]

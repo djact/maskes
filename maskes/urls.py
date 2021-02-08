@@ -37,7 +37,8 @@ urlpatterns = [
     path('requests/', include('supports.urls', namespace='request')),
     path('funds/', include('funds.urls', namespace='fund')),
     path('connect/', include('connect.urls', namespace='connection')),
-    path('events/',include('events.urls'))
+    path('events/',include('events.urls')),
+    path('faq', include('faq.urls')),
 ]
 
 if settings.DEBUG:

@@ -12,3 +12,5 @@ build/*
 !build/home.html
 static/
 note.txt
+FAQ-General.csv
+read_csv.py
