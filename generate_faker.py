@@ -5,9 +5,9 @@ django.setup()
 
 from faker import Faker
 from django.contrib.auth import get_user_model
-from requests.models import Request
+from supports.models import Request
 from django.utils import timezone
-from requests.request_form_choices import *
+from supports.request_form_choices import *
 
 GROCERY_LIST = ["Whole milk, fruit (strawberries and bananas), fruit roll ups, Minute Maid jug , orange juice , jumbolia mix, muffins, bread, noodles, Mac & cheese, caprisuns, juice boxes, pull ups 3T-4T",
 "2 containers whole milk, 1 loaf white bread, 2 dozzen eggs, snacks for 8 year old (must be peanut free, fruit snacks, crackers, boxed juice, etc).",
@@ -293,7 +293,7 @@ def create_request(N):
     for _ in range(N):
         requester = random.choice(User.objects.filter(is_requester=True))
         phone = fake.phone_number()[:12]
-        locations=random.choice(LOCATIONS)
+        locations = random.choice(LOCATIONS)
         address1 = fake.address().split('\n')[0]
         address2 = fake.secondary_address()
         city = random.choice(CITY_CHOICES)[0]
@@ -315,13 +315,12 @@ def create_request(N):
         created_date = timezone.make_aware(fake.date_time())
         status = random.choice(REQUEST_STATUS_CHOICES)[0]
         last_edit = "{}-{} by {} ".format(fake.month(),fake.day_of_month(),fake.first_name())
-        locations = random.choice(LOCATIONS)
         Request.objects.create(requester=requester,phone=phone,address1=address1,address2=address2,
             city=city,zip_code=zip_code,contact_preference=contact_preference,
             prefered_food=prefered_food, items_list=items_list,food_restrictions=food_restrictions, household_number=household_number,
             urgency=urgency, financial_support=financial_support, special_info=special_info,share_info=share_info,need_checkin=need_checkin,
             extra_info=extra_info, ma_pod_setup=ma_pod_setup, offer_resources=offer_resources, created_date=created_date, status=status, last_edit=last_edit,
-            agree_transfer=agree_transfer)
+            agree_transfer=agree_transfer, locations=locations)
         print('request ',  _+1, ' created!')
 
 create_user(10)

@@ -4,7 +4,7 @@ from django.forms import TextInput, Textarea
 from .models import Comment, Reply
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-from requests.models import Volunteer
+from supports.models import Volunteer
 # Register your models here.
 
 class CommentAdmin(admin.ModelAdmin):

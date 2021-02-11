@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from .permissions import IsOwnerOrReadOnly
 from .models import Comment, Reply
-from requests.models import Request
+from supports.models import Request
 from . import serializers
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -47,11 +47,14 @@ class ReplyViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-
-
-
-       
-            
+    
+    @action(detail=False, methods=['post'])
+    def view_replies(self, request, pk=None):
+        comment_id = self.request.data['commentId']
+        queryset = Reply.objects.filter(comment_id=comment_id).order_by('-created_date')
+        page = self.paginate_queryset(queryset)
+        serializer = serializers.ReplyDetailSerializer(page, many=True, context={'request':self.request})
+        return self.get_paginated_response(serializer.data)
        
         
 

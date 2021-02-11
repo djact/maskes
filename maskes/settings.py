@@ -10,14 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import django_heroku
 import os
 from datetime import timedelta
-import environ
-
-root = environ.Path(__file__)
-env = environ.Env()
-environ.Env.read_env()
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,9 +22,9 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'build')
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = 'THIS-IS-A-DUMMY-KEY'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -49,12 +44,16 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'djoser',
+    'django_rename_app',
     'users.apps.UsersConfig',
-    'requests.apps.RequestsConfig',
+    'supports.apps.SupportsConfig',
+    'offers.apps.OffersConfig',
+    'events.apps.EventsConfig',
     'funds.apps.FundsConfig',
     'connect.apps.ConnectConfig',
     'templated_mail',
     'storages',
+    'ckeditor',   
 ]
 
 MIDDLEWARE = [
@@ -210,13 +209,10 @@ DJOSER = {
     'HIDE_USERS': True,
 }
 
-EMAIL_BACKEND = env('EMAIL_BACKEND')
-if EMAIL_BACKEND == "django.core.mail.backends.smtp.EmailBackend":
-    EMAIL_HOST = env('EMAIL_HOST')
-    EMAIL_PORT = env('EMAIL_PORT')
-    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-    EMAIL_USE_TLS = True
+#Email will be setup in local_setting.py using environment variables
+#SECURITY WARNING: don't put your email info here
+#django dummy email backend will not send any email
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 
 AUTH_USER_MODEL = 'users.UserAccount'
@@ -254,7 +250,7 @@ JAZZMIN_SETTINGS = {
         {'model': 'users.UserAccount'},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
-        {'app': 'requests'},
+        {'app': 'supports'},
     ],
 
     'usermenu_links': [
@@ -266,7 +262,7 @@ JAZZMIN_SETTINGS = {
 
     'show_sidebar': True,
 
-    'order_with_respect_to': ['requests', 'funds', 'users', 'connect'],
+    'order_with_respect_to': ['supports', 'funds', 'users', 'connect'],
 
     # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
     'icons': {
@@ -275,8 +271,8 @@ JAZZMIN_SETTINGS = {
         'users.UserAddress': 'fas fa-map-marked',
         'users.UserProfile': 'fas fa-address-card',
         'auth.Group': 'fas fa-users',
-        'requests.Request': 'fas fa-mail-bulk',
-        'requests.Volunteer': 'fas fa-project-diagram',
+        'supports.Request': 'fas fa-mail-bulk',
+        'supports.Volunteer': 'fas fa-project-diagram',
         'funds.Reimbursement': 'fas fa-comment-dollar',
         'funds.Donation': 'fas fa-dollar-sign',
         'connect.Comment': 'fas fa-comments',
@@ -305,3 +301,21 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False
 }
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full'
+    },
+}
+
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
+
+try:
+  from .local_settings import *
+except ImportError:
+  pass

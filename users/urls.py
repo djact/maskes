@@ -1,11 +1,11 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import CustomTokenObtainPairView, ProfileViewSet, LogoutAndBlacklistRefreshTokenForUserView
-
+from .views import CustomTokenObtainPairView, ProfileViewSet, LogoutAndBlacklistRefreshTokenForUserView, CustomUserViewSet
 app_name='users'
 
 router = routers.DefaultRouter(trailing_slash=True)
 router.register('profile', ProfileViewSet, basename='profile')
+router.register("users", CustomUserViewSet)
 
 urlpatterns = [
     path('auth/jwt/create/', CustomTokenObtainPairView.as_view(), name='custom_token_obtain_pair'),

@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from requests.models import Request
+from supports.models import Request
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your models here.

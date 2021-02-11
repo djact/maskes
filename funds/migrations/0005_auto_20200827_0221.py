@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('requests', '0007_auto_20200827_0221'),
+        ('supports', '0007_auto_20200827_0221'),
         ('funds', '0004_auto_20200824_0041'),
     ]
 
@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reimbursement',
             name='volunteer',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='requests.Volunteer', verbose_name='Support ID'),
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='supports.Volunteer', verbose_name='Support ID'),
         ),
     ]
