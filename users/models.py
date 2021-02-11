@@ -5,6 +5,10 @@ from supports.request_form_choices import CITY_CHOICES
 from django.contrib.auth.models import (AbstractBaseUser, 
                                         PermissionsMixin, 
                                         BaseUserManager)
+from io import BytesIO
+from django.core.files import File
+from pathlib import Path
+import os
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, 
@@ -78,9 +82,13 @@ class UserAddress(models.Model):
     def __str__(self):
         return "{} - {} {}, {}, WA{}".format(self.user, self.address1, self.address2, self.city, self.zip_code)
 
+
+def file_path(instance, filename):
+    return os.path.join(f'profile_pics/{instance.id}', filename)
+
 class UserProfile(models.Model):
     user = models.OneToOneField(UserAccount, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default='default.jpg', upload_to=file_path)
     bio = models.TextField(blank=True)
     phone = models.CharField(max_length=25, blank=True)
     facebook = models.CharField(max_length=25, blank=True)
@@ -100,6 +108,10 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.email.split('@')[0]
+
+    def user_image_path(self):
+        return 'profile_pics/'
+    
     #Profile Photo square crop
     def crop_center(self, image, crop_width, crop_height):
         width, height = image.size
@@ -114,8 +126,29 @@ class UserProfile(models.Model):
     # RESIZE image
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        img = Image.open(self.image.path)       
+        
+        img = Image.open(self.image)       
         if img.height > 300 or img.width > 300:
+            image_types = {
+                'jpeg': 'JPEG',
+                'jpg': 'JPEG',
+                'png': 'PNG',
+                'gif': 'GIF',
+                'tif': 'TIFF',
+            }
+            buffer = BytesIO()
+            image_path = Path(self.image.name)
+            image_filename = image_path.name
+            filename_suffix = image_path.suffix[1:].lower()
+            image_format = image_types[filename_suffix] 
+
             output_size = (300, 300)
             img = self.crop_max_square(img).resize(output_size, Image.LANCZOS)
-            img.save(self.image.path, quality=95)
+            img.save(buffer, format=image_format)
+            
+            file_object = File(buffer)
+            file_object.content_type = 'image/jpeg'
+
+            self.image.save(image_filename, file_object)
+            self.save()
+

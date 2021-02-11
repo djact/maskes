@@ -59,6 +59,24 @@
         EMAIL_HOST_USER = 'youremail@example.com'
         EMAIL_HOST_PASSWORD = 'your-password' #not support 2-Step Verification
         EMAIL_USE_TLS = True
+        
+        #AMAZON S3 in production
+        if not DEBUG:
+            AWS_ACCESS_KEY_ID = 'your-aws-access-key'
+            AWS_SECRET_ACCESS_KEY = 'you-aws-secret-access-key'
+            AWS_STORAGE_BUCKET_NAME = 'aws-s3-bucket-name'
+            AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+            AWS_S3_OBJECT_PARAMETERS = {
+                'CacheControl': 'max-age=86400',
+            }
+            AWS_LOCATION = 'static'
+            STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+            DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+            STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+        STRIPE_PUBLISHABLE_KEY='your-stripe-public-key'
+        STRIPE_SECRET_KEY='yourt-stripe-secret-key'
+        STRIPE_WEBHOOK_SECRET='your-stripe-webhook-secret'
     ```
     *<font size="1">Set Google App Passwords info: https://support.google.com/accounts/answer/185833?hl=en</font>*
       
