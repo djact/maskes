@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'funds.apps.FundsConfig',
     'connect.apps.ConnectConfig',
     'templated_mail',
+    'storages',
     'ckeditor',   
 ]
 
@@ -139,15 +140,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'build/static')
-]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+if DEBUG:
+    STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'build/static')
+    ]
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # If True, the whitelist will not be used and all origins will be accepted. Defaults to False.
 CORS_ORIGIN_ALLOW_ALL = True
