@@ -1,8 +1,9 @@
 **LIVE:** https://skcema-live.herokuapp.com/
-**HOME**
+
+**HOME PAGE**
 <img width="1428" alt="demo" src="https://user-images.githubusercontent.com/61364158/132037359-94b43497-9536-48b0-a2b0-9b0fdf512728.png">
 
-**ADMIN**
+**ADMIN DASHBOARD**
 <img width="1428" alt="admin" src="https://user-images.githubusercontent.com/61364158/132035487-347c9b39-025d-437d-85d2-5f6d20a5d855.png">
 
 
